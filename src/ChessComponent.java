@@ -41,6 +41,39 @@ public class ChessComponent extends JComponent {
 	    }
 
 	}
+	drawPieces(g2d);
 
     }
+
+    public void drawPieces(Graphics2D g2d){
+	g2d.setFont(new Font("Monospaced", Font.PLAIN, 40));
+	g2d.setColor(Color.GRAY);
+
+	for (int row = 0; row < BOARD_SIZE; row++) {
+	    for (int col = 0; col < BOARD_SIZE; col++) {
+		if (board.getPiece(row, col) != null){
+		    if (board.getPiece(row, col).getPieceType() == PieceType.Bishop){
+			g2d.drawString("BI",col*SQUARE_WIDTH, row*SQUARE_WIDTH + SQUARE_WIDTH);
+		    }
+		    else if (board.getPiece(row,col).getPieceType() == PieceType.King){
+			g2d.drawString("K", col*SQUARE_WIDTH, row*SQUARE_WIDTH + SQUARE_WIDTH);
+		    }
+		    else if (board.getPiece(row, col).getPieceType() == PieceType.Pawn){
+			g2d.drawString("P", col*SQUARE_WIDTH, row*SQUARE_WIDTH + SQUARE_WIDTH);
+		    }
+		    else if (board.getPiece(row, col).getPieceType() == PieceType.Knight){
+			g2d.drawString("Kn", col*SQUARE_WIDTH, row*SQUARE_WIDTH + SQUARE_WIDTH);
+		    }
+		    else if (board.getPiece(row, col).getPieceType() == PieceType.Queen){
+			g2d.drawString("Q", col*SQUARE_WIDTH, row*SQUARE_WIDTH + SQUARE_WIDTH);
+		    }
+		    else{
+			g2d.drawString("R", col*SQUARE_WIDTH, row*SQUARE_WIDTH + SQUARE_WIDTH);
+		    }
+		}
+	    }
+
+	}
+    }
+
 }
