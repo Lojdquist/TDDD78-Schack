@@ -20,8 +20,6 @@ public class ChessComponent extends JComponent {
 
 	for (int row = 0; row < BOARD_SIZE; row++) {
 	    for (int col = 0; col < BOARD_SIZE; col++) {
-		g2d.drawRect(col*SQUARE_WIDTH, row*SQUARE_WIDTH, SQUARE_WIDTH, SQUARE_WIDTH);
-		g2d.fillRect(col*SQUARE_WIDTH, row*SQUARE_WIDTH, SQUARE_WIDTH, SQUARE_WIDTH);
 		if (row % 2 == 0){
 		    if (col % 2 == 0){
 			g2d.setColor(Color.BLACK);
@@ -37,6 +35,8 @@ public class ChessComponent extends JComponent {
 			g2d.setColor(Color.BLACK);
 		    }
 		}
+		g2d.drawRect(col*SQUARE_WIDTH, row*SQUARE_WIDTH, SQUARE_WIDTH, SQUARE_WIDTH);
+		g2d.fillRect(col*SQUARE_WIDTH, row*SQUARE_WIDTH, SQUARE_WIDTH, SQUARE_WIDTH);
 
 	    }
 
