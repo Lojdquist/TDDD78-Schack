@@ -4,6 +4,7 @@
 public class SchackTest {
     public static void main(String[] args) {
         Board testBoard = new Board();
+	ChessFrame testFrame = new ChessFrame(testBoard);
         testBoard.createNewBoard();
         Piece testpiece = testBoard.getPiece(3, 3);
 
