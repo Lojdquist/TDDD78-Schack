@@ -22,6 +22,8 @@ public class Board {
         placePawns();
         placeQueens();
 	placeRooks();
+	placeKngiht();
+	placeBishops();
     }
 
     public void placeKings(){
@@ -51,6 +53,22 @@ public class Board {
 
 	board[7][0] = new Rook("black");
 	board[7][7] = new Rook("black");
+    }
+
+    public void placeKngiht(){
+	board[0][1] = new Knight("white");
+	board[0][6] = new Knight("white");
+
+	board[7][1] = new Knight("black");
+	board[7][6] = new Knight("black");
+    }
+
+    public void placeBishops(){
+	board[0][2] = new Bishop("white");
+	board[0][5] = new Bishop("white");
+
+	board[7][2] = new Bishop("black");
+	board[7][5] = new Bishop("black");
     }
 
     public Piece getPiece(int y, int x) {
