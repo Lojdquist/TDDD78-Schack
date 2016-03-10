@@ -6,4 +6,6 @@ public abstract class Piece {
 
     public abstract String getColor();
 
+    public abstract PieceType getPieceType();
+
 }

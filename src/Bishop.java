@@ -3,7 +3,6 @@
  */
 public class Bishop extends Piece{
     public String color;
-
     public String getColor() {
 	return color;
     }
@@ -11,4 +10,7 @@ public class Bishop extends Piece{
     public Bishop(String color) {
 	this.color = color;
     }
+
+    @Override
+    public PieceType getPieceType(){return PieceType.Bishop;}
 }
