@@ -11,4 +11,7 @@ public class Queen extends Piece {
     public Queen(String color) {
 	this.color = color;
     }
+
+    @Override
+    public PieceType getPieceType(){return PieceType.Queen;}
 }

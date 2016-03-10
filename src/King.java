@@ -4,7 +4,6 @@
 public class King extends Piece {
     public String color;
 
-
     public String getColor() {
         return color;
     }
@@ -12,4 +11,7 @@ public class King extends Piece {
     public King(String color) {
         this.color = color;
     }
+
+    @Override
+    public PieceType getPieceType(){return PieceType.King;}
 }
