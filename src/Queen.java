@@ -1,3 +1,6 @@
+/**
+ * Created by axelo225 and simho765 on 07/03/16.
+ */
 public class Queen extends Piece {
     public String color;
 

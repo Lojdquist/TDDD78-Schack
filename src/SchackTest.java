@@ -1,5 +1,5 @@
 /**
- * Created by axelo225 on 07/03/16.
+ * Created by axelo225 and simho765 on 07/03/16.
  */
 public class SchackTest {
     public static void main(String[] args) {
