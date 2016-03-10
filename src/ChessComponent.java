@@ -22,17 +22,17 @@ public class ChessComponent extends JComponent {
 	    for (int col = 0; col < BOARD_SIZE; col++) {
 		if (row % 2 == 0){
 		    if (col % 2 == 0){
-			g2d.setColor(Color.BLACK);
+			g2d.setColor(Color.WHITE);
 		    }
 		    else {
-			g2d.setColor(Color.WHITE);
+			g2d.setColor(Color.BLACK);
 		    }
 		}else {
 		    if (col % 2 == 0){
-			g2d.setColor(Color.WHITE);
+			g2d.setColor(Color.BLACK);
 		    }
 		    else{
-			g2d.setColor(Color.BLACK);
+			g2d.setColor(Color.WHITE);
 		    }
 		}
 		g2d.drawRect(col*SQUARE_WIDTH, row*SQUARE_WIDTH, SQUARE_WIDTH, SQUARE_WIDTH);
