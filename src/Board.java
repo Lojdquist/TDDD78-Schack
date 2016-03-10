@@ -20,6 +20,7 @@ public class Board {
 
         placeKings();
         placePawns();
+        placeQueens();
     }
 
     public void placeKings(){
@@ -36,6 +37,11 @@ public class Board {
             board[6][col] = new Pawn("black");
 
         }
+    }
+
+    public void placeQueens(){
+        board[0][4] = new Queen("white");
+        board[7][4] = new Queen("white");
     }
 
     public Piece getPiece(int y, int x) {

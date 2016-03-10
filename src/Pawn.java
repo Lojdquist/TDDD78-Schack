@@ -6,7 +6,7 @@ public class Pawn extends Piece {
 	return color ;
     }
 
-    public Pawn(final String color) {
+    public Pawn(String color) {
 	this.color = color;
     }
 }
