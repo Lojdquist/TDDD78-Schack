@@ -4,10 +4,24 @@
 public class SchackTest {
     public static void main(String[] args) {
         Board testBoard = new Board();
-        System.out.println(testBoard.getSquares(0,0));
-        System.out.println(testBoard.getSquares(2,2));
-        System.out.println(testBoard.getSquares(8,8));
-        System.out.println(testBoard.getSquares(9,9));
-        System.out.println(testBoard.getSquares(11,11));
+        testBoard.createNewBoard();
+        Piece testpiece = testBoard.getPiece(3, 3);
+
+
+	StringBuilder builder = new StringBuilder();
+	for (int row = 0; row < 8; row++) {
+	    for (int col = 0; col < 8; col++) {
+		if (testBoard.getPiece(row, col) != null) {
+		    builder.append(testBoard.getPiece(row, col).getColor());
+		}
+		else {
+		    builder.append("Empty");
+		}
+	    }
+	    builder.append("\n");
+
+	}
+	System.out.println(builder.toString());
+
     }
 }

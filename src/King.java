@@ -4,9 +4,9 @@
 public class King extends Piece {
     public String color;
 
-    @Override
+
     public String getColor() {
-        return null;
+        return color;
     }
 
     public King(String color) {
