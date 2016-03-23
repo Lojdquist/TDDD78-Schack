@@ -13,13 +13,14 @@ public class ChessComponent extends JComponent implements MouseListener, MouseMo
     private Dimension dimension = new Dimension(SQUARE_WIDTH*BOARD_SIZE, SQUARE_WIDTH*BOARD_SIZE);
 
     /*
+
+   ---------------------------
+   ---------------------------
+   ---------------------------
     Denna klass använder vi inte
-
-
-
-
-
-
+   ---------------------------
+   ---------------------------
+   ---------------------------
     
      */
 

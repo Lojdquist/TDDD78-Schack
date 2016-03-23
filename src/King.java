@@ -14,4 +14,14 @@ public class King implements Piece{
 
     @Override
     public PieceType getPieceType(){return PieceType.King;}
+
+    @Override public boolean validateMove(int y, int x, int newY, int newX) {
+        if ( x-1 < newX && newX < x+1){
+            if (y-1 < newY && newY < y+1){
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
 }

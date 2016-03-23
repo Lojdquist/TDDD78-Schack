@@ -7,4 +7,6 @@ public interface Piece {
 
     public abstract PieceType getPieceType();
 
+    public abstract boolean validateMove(int y, int x, int newY, int newX);
+
 }

@@ -14,4 +14,9 @@ public class Bishop implements Piece{
 
     @Override
     public PieceType getPieceType(){return PieceType.Bishop;}
+
+    @Override
+    public boolean validateMove(int y, int x, int newY, int newX) {
+	return false;
+    }
 }

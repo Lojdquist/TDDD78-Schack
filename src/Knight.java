@@ -15,4 +15,7 @@ public class Knight implements Piece{
     @Override
     public PieceType getPieceType(){return PieceType.Knight;}
 
+    @Override public boolean validateMove(int y, int x, int newY, int newX) {
+	return false;
+    }
 }

@@ -15,4 +15,13 @@ public class Pawn implements Piece {
 
     @Override
     public PieceType getPieceType(){return PieceType.Pawn;}
+
+    @Override public boolean validateMove(int y, int x, int newY, int newX) {
+	if (color == "white"){
+	    return y-newY == 1;
+	}
+	else {
+	    return newY-y == 1;
+	}
+    }
 }

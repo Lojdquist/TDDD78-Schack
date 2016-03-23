@@ -10,12 +10,10 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
     private int yAdjustment;
     private JLayeredPane layeredPane;
     private JPanel chessBoard;
-    private JLabel chessPiece;
-    private JLabel oldChessPiece;
+    private JLabel chessPiece = null;
     private Dimension boardSize = new Dimension(SQUARE_WIDTH*BOARD_WIDTH, SQUARE_WIDTH*BOARD_WIDTH);
-    private Point oldPosition;
-    private String pieceColor;
-    private Component piece;
+    private Point oldPosition = null;
+    private String pieceColor = null;
 
     public ChessFrame(Board board){
 	super("Chess");
@@ -129,19 +127,13 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 
 	if (c instanceof JPanel) return;
 
-	piece = c;
-
 	oldPosition = c.getParent().getLocation();
-	System.out.println(c.getParent().getLocation());
 
 	xAdjustment = oldPosition.x - e.getX();
 	yAdjustment = oldPosition.y - e.getY();
 
 	chessPiece = (JLabel) c;
 	chessPiece.setLocation(e.getX() + xAdjustment, e.getY() + yAdjustment);
-
-	oldChessPiece = (JLabel) c;
-	oldChessPiece.setLocation(e.getX() + xAdjustment, e.getY() + yAdjustment);
 
 	chessPiece.setSize(chessPiece.getWidth(), chessPiece.getHeight());
 	layeredPane.add(chessPiece, JLayeredPane.DRAG_LAYER);
@@ -182,6 +174,7 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 	    board.movePiece(oldPosition.y/SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH, e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH);
 	    chessPiece.setVisible(true);
  	}
+
 	board.printBoard();
 
 

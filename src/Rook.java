@@ -14,4 +14,8 @@ public class Rook implements Piece{
 
     @Override
     public PieceType getPieceType(){return PieceType.Rook;}
+
+    @Override public boolean validateMove(int y, int x, int newY, int newX) {
+	return false;
+    }
 }

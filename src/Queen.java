@@ -14,4 +14,8 @@ public class Queen implements Piece {
 
     @Override
     public PieceType getPieceType(){return PieceType.Queen;}
+
+    @Override public boolean validateMove(int y, int x, int newY, int newX) {
+	return false;
+    }
 }

@@ -22,7 +22,7 @@ public class Board {
         placePawns();
         placeQueens();
 	placeRooks();
-	placeKngiht();
+	placeKnights();
 	placeBishops();
     }
 
@@ -55,7 +55,7 @@ public class Board {
 	board[7][7] = new Rook("black");
     }
 
-    public void placeKngiht(){
+    public void placeKnights(){
 	board[0][1] = new Knight("white");
 	board[0][6] = new Knight("white");
 
@@ -99,7 +99,7 @@ public class Board {
 	    builder.append("\n");
 
 	}
-	System.out.println(builder.toString());
+	System.out.println(builder);
     }
 }
 
