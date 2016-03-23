@@ -71,4 +71,7 @@ public class Board {
 	board[7][5] = new Bishop("black");
     }
 
+    public Piece getPiece(int y, int x) {
+	return board[y][x];
+    }
 }
