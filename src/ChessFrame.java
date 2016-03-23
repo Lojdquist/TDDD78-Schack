@@ -1,5 +1,3 @@
-import javafx.scene.layout.GridPane;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -13,7 +11,11 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
     private JLayeredPane layeredPane;
     private JPanel chessBoard;
     private JLabel chessPiece;
+    private JLabel oldChessPiece;
     private Dimension boardSize = new Dimension(SQUARE_WIDTH*BOARD_WIDTH, SQUARE_WIDTH*BOARD_WIDTH);
+    private Point oldPosition;
+    private String pieceColor;
+    private Component piece;
 
     public ChessFrame(Board board){
 	super("Chess");
@@ -85,53 +87,65 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 		if (board.getPiece(row,col) != null) {
 		    PieceType pieceType = board.getPiece(row, col).getPieceType();
 		    String color = board.getPiece(row, col).getColor();
-		    if (pieceType == PieceType.Pawn) {
-			addPanel("P " + color, panel);
-		    }
-		    else if (pieceType == PieceType.Rook){
-			addPanel("R " + color, panel);
-		    }
-		    else if (pieceType == PieceType.Knight){
-			addPanel("Kn " + color, panel);
-		    }
-		    else if (pieceType == PieceType.Queen){
-			addPanel("Q " + color, panel);
-		    }
-		    else if (pieceType == PieceType.King){
-			addPanel("K " + color, panel);
-		    }
-		    else if (pieceType == PieceType.Bishop){
-			addPanel("Bi " + color, panel);
-		    }
+		    addPiece(pieceType, panel, color);
+
 		}
 	    }
 	}
     }
 
-    private void addPanel(String piecetype, JPanel panel){
-	JLabel label = new JLabel(piecetype);
+    private void addPiece(PieceType pieceType, JPanel panel, String color){
+	JLabel label = null;
+
+	if (pieceType == PieceType.Pawn) {
+	    label = new JLabel("P " + color);
+	}
+	else if (pieceType == PieceType.Rook){
+	    label = new JLabel("R " + color);
+	}
+	else if (pieceType == PieceType.Knight){
+	    label = new JLabel("Kn " + color);
+	}
+	else if (pieceType == PieceType.Queen){
+	    label = new JLabel("Q " + color);
+	}
+	else if (pieceType == PieceType.King){
+	    label = new JLabel("K " + color);
+	}
+	else if (pieceType == PieceType.Bishop){
+	    label = new JLabel("Bi " + color);
+	}
+
 	panel.add(label);
     }
 
-    @Override public void mouseClicked(final MouseEvent e) {
-    }
 
     @Override public void mousePressed(final MouseEvent e) {
 	chessPiece = null;
+	pieceColor = null;
+	oldPosition = null;
+
 	Component c =  chessBoard.findComponentAt(e.getX(), e.getY());
 
 	if (c instanceof JPanel) return;
 
-	Point parentLocation = c.getParent().getLocation();
+	piece = c;
+
+	oldPosition = c.getParent().getLocation();
 	System.out.println(c.getParent().getLocation());
 
-	xAdjustment = parentLocation.x - e.getX();
-	yAdjustment = parentLocation.y - e.getY();
+	xAdjustment = oldPosition.x - e.getX();
+	yAdjustment = oldPosition.y - e.getY();
 
 	chessPiece = (JLabel) c;
 	chessPiece.setLocation(e.getX() + xAdjustment, e.getY() + yAdjustment);
+
+	oldChessPiece = (JLabel) c;
+	oldChessPiece.setLocation(e.getX() + xAdjustment, e.getY() + yAdjustment);
+
 	chessPiece.setSize(chessPiece.getWidth(), chessPiece.getHeight());
 	layeredPane.add(chessPiece, JLayeredPane.DRAG_LAYER);
+	pieceColor = board.getPiece(oldPosition.y / SQUARE_WIDTH, oldPosition.x / SQUARE_WIDTH).getColor();
 
     }
 
@@ -141,18 +155,41 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 
 	chessPiece.setVisible(false);
 	Component c =  chessBoard.findComponentAt(e.getX(), e.getY());
+	System.out.println(e.getX() +" -- " + e.getY());
+	System.out.println(pieceColor);
 
  	if (c instanceof JLabel) {
-	    Container parent = c.getParent();
-	    parent.remove(0);
-	    parent.add( chessPiece );
+
+	    if (board.isFriendlyPiece(e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH, pieceColor)){
+		Component oldc = chessBoard.findComponentAt(oldPosition);
+
+		PieceType oldPieceType = board.getPiece(oldPosition.y / SQUARE_WIDTH, oldPosition.x / SQUARE_WIDTH).getPieceType();
+		addPiece(oldPieceType, (JPanel) oldc, pieceColor);
+
+	    }
+
+	    else {
+		Container parent = c.getParent();
+		parent.remove(0);
+		parent.add(chessPiece);
+		board.movePiece(oldPosition.y/SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH, e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH);
+		chessPiece.setVisible(true);
+	    }
  	}
 	else {
 	    Container parent = (Container)c;
 	    parent.add( chessPiece );
+	    board.movePiece(oldPosition.y/SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH, e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH);
+	    chessPiece.setVisible(true);
  	}
+	board.printBoard();
 
- 	chessPiece.setVisible(true);
+
+    }
+
+    @Override public void mouseDragged(final MouseEvent e) {
+	if (chessPiece == null) return;
+	chessPiece.setLocation(e.getX() + xAdjustment, e.getY() + yAdjustment);
 
     }
 
@@ -164,13 +201,10 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 
     }
 
-    @Override public void mouseDragged(final MouseEvent e) {
-	if (chessPiece == null) return;
-	chessPiece.setLocation(e.getX() + xAdjustment, e.getY() + yAdjustment);
+    @Override public void mouseMoved(final MouseEvent e) {
 
     }
 
-    @Override public void mouseMoved(final MouseEvent e) {
-
+    @Override public void mouseClicked(final MouseEvent e) {
     }
 }

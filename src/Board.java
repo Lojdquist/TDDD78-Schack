@@ -74,4 +74,32 @@ public class Board {
     public Piece getPiece(int y, int x) {
 	return board[y][x];
     }
+
+    public boolean isFriendlyPiece(int y, int x, String color) {
+	return board[y][x].getColor() == color;
+    }
+
+    public void movePiece(int y, int x, int newY, int newX){
+	Piece piece = board[y][x];
+	board[y][x] = null;
+	board[newY][newX] = piece;
+    }
+
+    public void printBoard(){
+	StringBuilder builder = new StringBuilder();
+	for (int row = 0; row < 8; row++) {
+	    for (int col = 0; col < 8; col++) {
+		if (board[row][col] != null) {
+		    builder.append(board[row][col].getPieceType() + board[row][col].getColor());
+		}
+		else {
+		    builder.append("Empty");
+		}
+	    }
+	    builder.append("\n");
+
+	}
+	System.out.println(builder.toString());
+    }
 }
+
