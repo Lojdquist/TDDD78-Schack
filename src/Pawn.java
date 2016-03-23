@@ -1,7 +1,7 @@
 /**
  * Created by axelo225 and simho765 on 07/03/16.
  */
-public class Pawn extends Piece {
+public class Pawn implements Piece {
 
     public String color;
 

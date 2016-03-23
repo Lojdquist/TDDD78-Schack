@@ -1,7 +1,7 @@
 /**
  * Created by axelo225 and simho765 on 07/03/16.
  */
-public class Knight extends Piece{
+public class Knight implements Piece{
     public String color;
 
     public String getColor() {
@@ -14,4 +14,5 @@ public class Knight extends Piece{
 
     @Override
     public PieceType getPieceType(){return PieceType.Knight;}
+
 }

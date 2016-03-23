@@ -1,7 +1,7 @@
 /**
  * Created by axelo225 and simho765 on 07/03/16.
  */
-public class Bishop extends Piece{
+public class Bishop implements Piece{
     public String color;
 
     public String getColor() {
