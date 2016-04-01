@@ -1,3 +1,5 @@
+import java.util.Map;
+
 /**
  * Created by axelo225 and simho765 on 07/03/16.
  */
@@ -20,7 +22,7 @@ public class Bishop extends Piece{
 	if (newX - newY == x -y){
 	    return true;
 	}
-	else if (newX - x == newY - newY){
+	else if (Math.abs(newX - x) == Math.abs(newY - y)){
 	    return true;
 	}
 	return false;
