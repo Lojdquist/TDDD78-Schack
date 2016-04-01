@@ -16,12 +16,6 @@ public class King extends Piece{
     public PieceType getPieceType(){return PieceType.King;}
 
     @Override public boolean validateMove(int y, int x, int newY, int newX, Board board) {
-        if ( x-1<= newX && newX <= x+1) {
-            if (y - 1 <= newY && newX <= x + 1) {
-                return true;
-            }
-            return false;
-        }
-        return false;
+        return (y - 1 <= newY && newY <= y + 1) && ( x-1<= newX && newX <= x+1);
     }
 }
