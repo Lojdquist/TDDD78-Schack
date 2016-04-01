@@ -11,6 +11,9 @@ public abstract class Piece {
         if (newY < 0 || newY > 7 || newX < 0 || newX > 7){
             return false;
         }
+        else if (newY == y && newX == x){
+            return false;
+        }
         return true;
     }
 

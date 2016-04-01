@@ -16,6 +16,12 @@ public class Knight extends Piece{
     public PieceType getPieceType(){return PieceType.Knight;}
 
     @Override public boolean validateMove(int y, int x, int newY, int newX, Board board) {
+	int diffX = Math.abs(x - newX);
+	int diffY = Math.abs(y - newY);
+
+	if ((diffY == 2 && diffX == 1) || (diffY == 1 && diffX == 2)) {
+	    return true;
+	}
 	return false;
     }
 }
