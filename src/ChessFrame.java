@@ -147,12 +147,12 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 
 	chessPiece.setVisible(false);
 	Component c =  chessBoard.findComponentAt(e.getX(), e.getY());
-	System.out.println(e.getX() +" -- " + e.getY());
+	System.out.println(e.getX()/SQUARE_WIDTH +" -- " + e.getY()/SQUARE_WIDTH);
 	System.out.println(pieceColor);
 
  	if (c instanceof JLabel) {
 
-	    if (board.isFriendlyPiece(e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH, pieceColor)){
+	    if (!board.getPiece(oldPosition.y/ SQUARE_WIDTH, oldPosition.x / SQUARE_WIDTH).validateMove(oldPosition.y/ SQUARE_WIDTH, oldPosition.x /SQUARE_WIDTH, e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH, board)){
 		Component oldc = chessBoard.findComponentAt(oldPosition);
 
 		PieceType oldPieceType = board.getPiece(oldPosition.y / SQUARE_WIDTH, oldPosition.x / SQUARE_WIDTH).getPieceType();
@@ -168,6 +168,12 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 		chessPiece.setVisible(true);
 	    }
  	}
+	else if (!board.getPiece(oldPosition.y /SQUARE_WIDTH, oldPosition.x / SQUARE_WIDTH).validateMove(oldPosition.y/ SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH, e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH, board)){
+	    Component oldc = chessBoard.findComponentAt(oldPosition);
+
+	    PieceType oldPieceType = board.getPiece(oldPosition.y / SQUARE_WIDTH, oldPosition.x / SQUARE_WIDTH).getPieceType();
+	    addPiece(oldPieceType, (JPanel) oldc, pieceColor);
+	}
 	else {
 	    Container parent = (Container)c;
 	    parent.add( chessPiece );

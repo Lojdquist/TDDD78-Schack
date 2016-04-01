@@ -1,7 +1,7 @@
 /**
  * Created by axelo225 and simho765 on 07/03/16.
  */
-public class Rook implements Piece{
+public class Rook extends Piece{
     public String color;
 
     public String getColor() {
@@ -15,7 +15,7 @@ public class Rook implements Piece{
     @Override
     public PieceType getPieceType(){return PieceType.Rook;}
 
-    @Override public boolean validateMove(int y, int x, int newY, int newX) {
+    @Override public boolean validateMove(int y, int x, int newY, int newX, Board board) {
 	return false;
     }
 }

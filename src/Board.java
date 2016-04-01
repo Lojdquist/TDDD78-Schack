@@ -75,9 +75,11 @@ public class Board {
 	return board[y][x];
     }
 
-    public boolean isFriendlyPiece(int y, int x, String color) {
+    public boolean isFriendly(int y, int x, String color) {
 	return board[y][x].getColor() == color;
     }
+
+    public boolean isOpponent(int y, int x, String color){return board[y][x].getColor() != color;}
 
     public void movePiece(int y, int x, int newY, int newX){
 	Piece piece = board[y][x];

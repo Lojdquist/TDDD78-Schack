@@ -1,7 +1,7 @@
 /**
  * Created by axelo225 and simho765 on 07/03/16.
  */
-public class Pawn implements Piece {
+public class Pawn extends Piece {
 
     public String color;
 
@@ -16,12 +16,12 @@ public class Pawn implements Piece {
     @Override
     public PieceType getPieceType(){return PieceType.Pawn;}
 
-    @Override public boolean validateMove(int y, int x, int newY, int newX) {
+    @Override public boolean validateMove(int y, int x, int newY, int newX, Board board) {
 	if (color == "white"){
-	    return y-newY == 1;
+	    return newY - y == 1 && newX == x;
 	}
 	else {
-	    return newY-y == 1;
+	    return y - newY == 1 && newX == x;
 	}
     }
 }
