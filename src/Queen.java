@@ -16,16 +16,40 @@ public class Queen extends Piece {
     public PieceType getPieceType(){return PieceType.Queen;}
 
     @Override public boolean validateMove(int y, int x, int newY, int newX, Board board) {
+	int xDiff = newX -x;
+	int yDiff = newY -y;
+
 	if (!super.validateMove(y, x, newY, newX, board)){
 	    return false;
 	}
-	if (newX - newY == x -y){
-	    return true;
+	else if (board.isFriendly(newY, newX, color)){
+	    return false;
 	}
-	else if (Math.abs(newX - x) == Math.abs(newY - y)){
-	    return true;
+	else if (xDiff > 0 && yDiff == 0){
+	    return !isPieceInPathLeft(y, x, newX, board);
 	}
-	return (newX == x && newY != y) || (newY == y && newX != x);
+	else if (xDiff < 0 && yDiff == 0){
+	    return !isPieceInPathRight(y, x, newX, board);
+	}
+	else if (xDiff == 0 && yDiff > 0){
+	    return !isPieceInPathDown(y, x, newY, board);
+	}
+	else if (xDiff == 0 && yDiff < 0){
+	    return !isPieceInPathUp(y, x, newY, board);
+	}
+	else if (xDiff > 0 && yDiff > 0){
+	    return !isPieceInPathDownLeft(y, x, newY, board);
+	}
+	else if (xDiff > 0 && yDiff < 0){
+	    return !isPieceInPathUpLeft(y, x, newY, board);
+	}
+	else if (xDiff < 0 && yDiff > 0){
+	    return !isPieceInPathDownRight(y, x, newY, board);
+	}
+	else if (xDiff < 0 && yDiff < 0){
+	    return !isPieceInPathUpRight(y, x, newY, board);
+	}
+	return false;
     }
 
 }
