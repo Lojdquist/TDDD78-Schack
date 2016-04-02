@@ -16,6 +16,9 @@ public class Rook extends Piece{
     public PieceType getPieceType(){return PieceType.Rook;}
 
     @Override public boolean validateMove(int y, int x, int newY, int newX, Board board) {
+	if (!super.validateMove(y,x, newY, newX, board)){
+	    return false;
+	}
 	return (newX == x && newY != y) || (newY == y && newX != x);
     }
 }

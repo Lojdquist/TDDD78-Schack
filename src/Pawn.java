@@ -19,23 +19,42 @@ public class Pawn extends Piece {
     public PieceType getPieceType(){return PieceType.Pawn;}
 
     @Override public boolean validateMove(int y, int x, int newY, int newX, Board board) {
+	if (!super.validateMove(y, x, newY, newX, board)){
+	    return false;
+	}
+
 	if (color == "white"){
 	    if (!hasMoved) {
-		if ((newY -y == 2 && newX == x) || (newY - y == 1 && newX == x)){
+		if (((newY - y == 2 && newX == x && board.getPiece(newY - 1, newX) == null) || (newY - y == 1 && newX == x)) && board.getPiece(newY, newX) == null){
 		    hasMoved = true;
 		}
-		return (newY - y == 2 && newX == x) || (newY - y == 1 && newX == x) ;
+		else if (newY - y == 1 && (newX == x + 1 || newX == x-1) && board.isOpponent(newY, newX, color)){
+		    hasMoved = true;
+		    return true;
+		}
+		return ((newY - y == 2 && newX == x && board.getPiece(newY - 1, newX) == null) || (newY - y == 1 && newX == x)) && board.getPiece(newY, newX) == null ;
 	    }
-	    return newY - y == 1 && newX == x;
+	    else if ((newY - y == 1 && (newX == x + 1 || newX == x-1)) && board.isOpponent(newY, newX, color)){
+		return true;
+	    }
+	    return newY - y == 1 && newX == x && board.getPiece(newY, newX) == null;
 	}
+
 	else {
 	    if (!hasMoved){
-		if ((y - newY == 2 && newX == x) || (y - newY == 1 && newX == x)){
+		if (((y - newY == 2 && newX == x && board.getPiece(newY +1,newX) == null) || (y - newY == 1 && newX == x)) && board.getPiece(newY, newX) == null){
 		    hasMoved = true;
 		}
-		return (y - newY == 2 && newX == x) || (y - newY == 1 && newX == x) ;
+		else if ((y - newY == 1 && (newX == x + 1 || newX == x-1)) && board.isOpponent(newY, newX, color)){
+		    hasMoved = true;
+		    return true;
+		}
+		return ((y - newY == 2 && newX == x && board.getPiece(newY +1,newX) == null) || (y - newY == 1 && newX == x)) && board.getPiece(newY, newX) == null;
 	    }
-	    return y - newY == 1 && newX == x;
+	    else if (y - newY == 1 && (newX == x + 1 || newX == x-1) && board.isOpponent(newY, newX, color)){
+		return true;
+	    }
+	    return y - newY == 1 && newX == x && board.getPiece(newY, newX) == null;
 	}
     }
 }
