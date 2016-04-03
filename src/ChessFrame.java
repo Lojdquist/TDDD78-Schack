@@ -133,6 +133,7 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 	oldPosition = c.getParent().getLocation();
 	pieceColor = board.getPiece(oldPosition.y / SQUARE_WIDTH, oldPosition.x / SQUARE_WIDTH).getColor();
 
+	if (board.getPlayerTurn() != pieceColor) return;
 
 	xAdjustment = oldPosition.x - e.getX();
 	yAdjustment = oldPosition.y - e.getY();
@@ -170,6 +171,13 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 		parent.add(chessPiece);
 		board.movePiece(oldPosition.y/SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH, e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH);
 		chessPiece.setVisible(true);
+
+		if (board.getPlayerTurn() == PieceColor.BLACK){
+		    board.setPlayerTurn(PieceColor.WHITE);
+		}
+		else {
+		    board.setPlayerTurn(PieceColor.BLACK);
+		}
 	    }
  	}
 	else if (!board.getPiece(oldPosition.y /SQUARE_WIDTH, oldPosition.x / SQUARE_WIDTH).validateMove(oldPosition.y/ SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH, e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH, board)){
@@ -183,6 +191,13 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 	    parent.add( chessPiece );
 	    board.movePiece(oldPosition.y/SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH, e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH);
 	    chessPiece.setVisible(true);
+
+	    if (board.getPlayerTurn() == PieceColor.BLACK){
+		board.setPlayerTurn(PieceColor.WHITE);
+	    }
+	    else {
+		board.setPlayerTurn(PieceColor.BLACK);
+	    }
  	}
 	board.printBoard();
     }

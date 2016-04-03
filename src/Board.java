@@ -78,6 +78,14 @@ public class Board {
 	return board[y][x];
     }
 
+    public PieceColor getPlayerTurn() {
+	return playerTurn;
+    }
+
+    public void setPlayerTurn(final PieceColor playerTurn) {
+	this.playerTurn = playerTurn;
+    }
+
     public boolean isFriendly(int y, int x, PieceColor color) {
 	if (board[y][x] != null){
 	    return board[y][x].getColor() == color;
