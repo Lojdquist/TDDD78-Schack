@@ -2,13 +2,13 @@
  * Created by axelo225 and simho765 on 07/03/16.
  */
 public class Queen extends Piece {
-    public String color;
+    public PieceColor color;
 
-    public String getColor() {
+    public PieceColor getColor() {
 	return color;
     }
 
-    public Queen(String color) {
+    public Queen(PieceColor color) {
 	this.color = color;
     }
 
@@ -26,29 +26,29 @@ public class Queen extends Piece {
 	    return false;
 	}
 	else if (xDiff > 0 && yDiff == 0){
-	    return !isPieceInPathLeft(y, x, newX, board);
-	}
-	else if (xDiff < 0 && yDiff == 0){
 	    return !isPieceInPathRight(y, x, newX, board);
 	}
-	else if (xDiff == 0 && yDiff > 0){
+	else if (xDiff < 0 && yDiff == 0){
+	    return !isPieceInPathLeft(y, x, newX, board);
+	}
+	else if (yDiff > 0 && xDiff == 0){
 	    return !isPieceInPathDown(y, x, newY, board);
 	}
-	else if (xDiff == 0 && yDiff < 0){
+	else if (yDiff < 0 && xDiff == 0){
 	    return !isPieceInPathUp(y, x, newY, board);
 	}
-	else if (xDiff > 0 && yDiff > 0){
-	    return !isPieceInPathDownLeft(y, x, newY, board);
+	else if (newX - newY == x -y){
+	    if (xDiff > 0 && yDiff > 0){
+		return !isPieceInPathDownRight(y, x, newY, board);
+	    }
+	    else return !isPieceInPathUpLeft(y, x, newY, board);
 	}
-	else if (xDiff > 0 && yDiff < 0){
-	    return !isPieceInPathUpLeft(y, x, newY, board);
-	}
-	else if (xDiff < 0 && yDiff > 0){
-	    return !isPieceInPathDownRight(y, x, newY, board);
-	}
-	else if (xDiff < 0 && yDiff < 0){
-	    return !isPieceInPathUpRight(y, x, newY, board);
-	}
+	else if (Math.abs(newX - x) == Math.abs(newY - y)){
+	    if (xDiff > 0 && yDiff < 0){
+		return !isPieceInPathUpRight(y, x, newY, board);
+	    }
+	    else return !isPieceInPathDownLeft(y, x, newY, board);
+ 	}
 	return false;
     }
 

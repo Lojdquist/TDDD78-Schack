@@ -1,5 +1,8 @@
+import javafx.scene.paint.*;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.Color;
 import java.awt.event.*;
 
 public class ChessFrame extends JFrame implements MouseListener, MouseMotionListener{
@@ -13,7 +16,7 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
     private JLabel chessPiece = null;
     private Dimension boardSize = new Dimension(SQUARE_WIDTH*BOARD_WIDTH, SQUARE_WIDTH*BOARD_WIDTH);
     private Point oldPosition = null;
-    private String pieceColor = null;
+    private PieceColor pieceColor;
 
     public ChessFrame(Board board){
 	super("Chess");
@@ -84,7 +87,7 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 		JPanel panel = (JPanel) chessBoard.getComponent(row*BOARD_WIDTH + col);
 		if (board.getPiece(row,col) != null) {
 		    PieceType pieceType = board.getPiece(row, col).getPieceType();
-		    String color = board.getPiece(row, col).getColor();
+		    PieceColor color = board.getPiece(row, col).getColor();
 		    addPiece(pieceType, panel, color);
 
 		}
@@ -92,7 +95,7 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 	}
     }
 
-    private void addPiece(PieceType pieceType, JPanel panel, String color){
+    private void addPiece(PieceType pieceType, JPanel panel, PieceColor color){
 	JLabel label = null;
 
 	if (pieceType == PieceType.Pawn) {
@@ -128,6 +131,8 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 	if (c instanceof JPanel) return;
 
 	oldPosition = c.getParent().getLocation();
+	pieceColor = board.getPiece(oldPosition.y / SQUARE_WIDTH, oldPosition.x / SQUARE_WIDTH).getColor();
+
 
 	xAdjustment = oldPosition.x - e.getX();
 	yAdjustment = oldPosition.y - e.getY();
@@ -137,7 +142,6 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 
 	chessPiece.setSize(chessPiece.getWidth(), chessPiece.getHeight());
 	layeredPane.add(chessPiece, JLayeredPane.DRAG_LAYER);
-	pieceColor = board.getPiece(oldPosition.y / SQUARE_WIDTH, oldPosition.x / SQUARE_WIDTH).getColor();
 
     }
 
@@ -180,10 +184,7 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 	    board.movePiece(oldPosition.y/SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH, e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH);
 	    chessPiece.setVisible(true);
  	}
-
 	board.printBoard();
-
-
     }
 
     @Override public void mouseDragged(final MouseEvent e) {

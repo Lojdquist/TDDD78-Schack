@@ -2,13 +2,13 @@
  * Created by axelo225 and simho765 on 07/03/16.
  */
 public class Rook extends Piece{
-    public String color;
+    public PieceColor color;
 
-    public String getColor() {
+    public PieceColor getColor() {
 	return color;
     }
 
-    public Rook(String color) {
+    public Rook(PieceColor color) {
 	this.color = color;
     }
 
@@ -26,7 +26,6 @@ public class Rook extends Piece{
 	    return false;
 	}
 	else if (xDiff > 0 && yDiff == 0){
-	    System.out.println("moving rook right");
 	    return !isPieceInPathRight(y, x, newX, board);
 	}
 	else if (xDiff < 0 && yDiff == 0){

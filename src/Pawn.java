@@ -4,13 +4,13 @@
 public class Pawn extends Piece {
 
     private boolean hasMoved;
-    public String color;
+    public PieceColor color;
 
-    public String getColor() {
+    public PieceColor getColor() {
 	return color ;
     }
 
-    public Pawn(String color) {
+    public Pawn(PieceColor color) {
 	this.color = color;
 	hasMoved = false;
     }
@@ -23,7 +23,7 @@ public class Pawn extends Piece {
 	    return false;
 	}
 
-	if (color == "white"){
+	if (color == PieceColor.WHITE){
 	    if (!hasMoved) {
 		if (((newY - y == 2 && newX == x && board.getPiece(newY - 1, newX) == null) || (newY - y == 1 && newX == x)) && board.getPiece(newY, newX) == null){
 		    hasMoved = true;

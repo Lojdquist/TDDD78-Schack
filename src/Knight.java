@@ -2,13 +2,13 @@
  * Created by axelo225 and simho765 on 07/03/16.
  */
 public class Knight extends Piece{
-    public String color;
+    public PieceColor color;
 
-    public String getColor() {
+    public PieceColor getColor() {
 	return color;
     }
 
-    public Knight(String color) {
+    public Knight(PieceColor color) {
 	this.color = color;
     }
 

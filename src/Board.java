@@ -5,6 +5,7 @@ public class Board {
     public Piece[][] board;
     private final static int HEIGTH = 8;
     private final static int WIDTH = 8;
+    private PieceColor playerTurn;
 
     public Board() {
         board = new Piece[8][8];
@@ -24,65 +25,67 @@ public class Board {
 	placeRooks();
 	placeKnights();
 	placeBishops();
+
+	playerTurn = PieceColor.WHITE;
     }
 
     public void placeKings(){
-        board[0][3] = new King("white");
-        board[7][3] = new King("black");
+        board[0][3] = new King(PieceColor.WHITE);
+        board[7][3] = new King(PieceColor.BLACK);
     }
 
     public void placePawns(){
         for (int col = 0; col < HEIGTH ; col++) {
-            board[1][col] = new Pawn("white");
+            board[1][col] = new Pawn(PieceColor.WHITE);
         }
 
         for (int col = 0; col < HEIGTH; col++) {
-            board[6][col] = new Pawn("black");
+            board[6][col] = new Pawn(PieceColor.BLACK);
 
         }
     }
 
     public void placeQueens(){
-        board[0][4] = new Queen("white");
-        board[7][4] = new Queen("black");
+        board[0][4] = new Queen(PieceColor.WHITE);
+        board[7][4] = new Queen(PieceColor.BLACK);
     }
 
     public void placeRooks(){
-	board[0][0] = new Rook("white");
-	board[0][7] = new Rook("white");
+	board[0][0] = new Rook(PieceColor.WHITE);
+	board[0][7] = new Rook(PieceColor.WHITE);
 
-	board[7][0] = new Rook("black");
-	board[7][7] = new Rook("black");
+	board[7][0] = new Rook(PieceColor.BLACK);
+	board[7][7] = new Rook(PieceColor.BLACK);
     }
 
     public void placeKnights(){
-	board[0][1] = new Knight("white");
-	board[0][6] = new Knight("white");
+	board[0][1] = new Knight(PieceColor.WHITE);
+	board[0][6] = new Knight(PieceColor.WHITE);
 
-	board[7][1] = new Knight("black");
-	board[7][6] = new Knight("black");
+	board[7][1] = new Knight(PieceColor.BLACK);
+	board[7][6] = new Knight(PieceColor.BLACK);
     }
 
     public void placeBishops(){
-	board[0][2] = new Bishop("white");
-	board[0][5] = new Bishop("white");
+	board[0][2] = new Bishop(PieceColor.WHITE);
+	board[0][5] = new Bishop(PieceColor.WHITE);
 
-	board[7][2] = new Bishop("black");
-	board[7][5] = new Bishop("black");
+	board[7][2] = new Bishop(PieceColor.BLACK);
+	board[7][5] = new Bishop(PieceColor.BLACK);
     }
 
     public Piece getPiece(int y, int x) {
 	return board[y][x];
     }
 
-    public boolean isFriendly(int y, int x, String color) {
+    public boolean isFriendly(int y, int x, PieceColor color) {
 	if (board[y][x] != null){
 	    return board[y][x].getColor() == color;
 	}
 	return false;
     }
 
-    public boolean isOpponent(int y, int x, String color){
+    public boolean isOpponent(int y, int x, PieceColor color){
 	if (board[y][x] != null) {
 	    return board[y][x].getColor() != color;
 	}
@@ -100,7 +103,7 @@ public class Board {
 	for (int row = 0; row < 8; row++) {
 	    for (int col = 0; col < 8; col++) {
 		if (board[row][col] != null) {
-		    builder.append(board[row][col].getPieceType() + board[row][col].getColor());
+		    builder.append(board[row][col].getPieceType() + board[row][col].getColor().toString());
 		}
 		else {
 		    builder.append("Empty");

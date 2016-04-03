@@ -3,7 +3,7 @@
  */
 public abstract class Piece {
 
-    public abstract String getColor();
+    public abstract PieceColor getColor();
 
     public abstract PieceType getPieceType();
 

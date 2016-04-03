@@ -2,13 +2,13 @@
  * Created by axelo225 and simho765 on 07/03/16.
  */
 public class King extends Piece{
-    public String color;
+    public PieceColor color;
 
-    public String getColor() {
+    public PieceColor getColor() {
         return color;
     }
 
-    public King(String color) {
+    public King(PieceColor color) {
         this.color = color;
     }
 
