@@ -22,8 +22,10 @@ public class Knight extends Piece{
 	if (!super.validateMove(y, x, newY, newX, board)){
 	    return false;
 	}
-
-	if ((diffY == 2 && diffX == 1) || (diffY == 1 && diffX == 2)) {
+	else if (board.isFriendly(newY, newX, color)){
+	    return false;
+	}
+	else if ((diffY == 2 && diffX == 1) || (diffY == 1 && diffX == 2)) {
 	    return true;
 	}
 	return false;

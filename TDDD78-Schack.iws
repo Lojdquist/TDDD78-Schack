@@ -23,6 +23,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="Knight.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Knight.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.6815643">
+              <caret line="26" column="9" selection-start-line="26" selection-start-column="9" selection-end-line="26" selection-end-column="9" />
+              <folding>
+                <element signature="e#215#216#0" expanded="true" />
+                <element signature="e#242#243#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="Queen.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Queen.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -106,14 +119,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Board.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Board.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Board.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.6182494">
-              <caret line="84" column="60" selection-start-line="84" selection-start-column="60" selection-end-line="84" selection-end-column="60" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="113" column="100" selection-start-line="113" selection-start-column="100" selection-end-line="113" selection-end-column="100" />
               <folding>
                 <element signature="e#1947#1948#0" expanded="true" />
                 <element signature="e#1973#1974#0" expanded="true" />
+                <element signature="e#2035#2036#0" expanded="true" />
                 <element signature="e#2072#2073#0" expanded="true" />
               </folding>
             </state>
@@ -151,13 +165,13 @@
         <option value="$PROJECT_DIR$/src/Piece.java" />
         <option value="$PROJECT_DIR$/src/Bishop.java" />
         <option value="$PROJECT_DIR$/src/King.java" />
-        <option value="$PROJECT_DIR$/src/Knight.java" />
         <option value="$PROJECT_DIR$/src/Pawn.java" />
         <option value="$PROJECT_DIR$/src/Queen.java" />
         <option value="$PROJECT_DIR$/src/Rook.java" />
         <option value="$PROJECT_DIR$/src/ChessComponent.java" />
-        <option value="$PROJECT_DIR$/src/Board.java" />
         <option value="$PROJECT_DIR$/src/ChessFrame.java" />
+        <option value="$PROJECT_DIR$/src/Board.java" />
+        <option value="$PROJECT_DIR$/src/Knight.java" />
       </list>
     </option>
   </component>
@@ -798,6 +812,7 @@
           <folding>
             <element signature="e#1947#1948#0" expanded="true" />
             <element signature="e#1973#1974#0" expanded="true" />
+            <element signature="e#2035#2036#0" expanded="true" />
             <element signature="e#2072#2073#0" expanded="true" />
           </folding>
         </state>
@@ -876,6 +891,7 @@
           <folding>
             <element signature="e#1947#1948#0" expanded="true" />
             <element signature="e#1973#1974#0" expanded="true" />
+            <element signature="e#2035#2036#0" expanded="true" />
             <element signature="e#2072#2073#0" expanded="true" />
           </folding>
         </state>
@@ -962,6 +978,7 @@
           <folding>
             <element signature="e#1947#1948#0" expanded="true" />
             <element signature="e#1973#1974#0" expanded="true" />
+            <element signature="e#2035#2036#0" expanded="true" />
             <element signature="e#2072#2073#0" expanded="true" />
           </folding>
         </state>
@@ -1025,6 +1042,7 @@
           <folding>
             <element signature="e#1947#1948#0" expanded="true" />
             <element signature="e#1973#1974#0" expanded="true" />
+            <element signature="e#2035#2036#0" expanded="true" />
             <element signature="e#2072#2073#0" expanded="true" />
           </folding>
         </state>
@@ -1037,6 +1055,7 @@
           <folding>
             <element signature="e#1947#1948#0" expanded="true" />
             <element signature="e#1973#1974#0" expanded="true" />
+            <element signature="e#2035#2036#0" expanded="true" />
             <element signature="e#2072#2073#0" expanded="true" />
           </folding>
         </state>
@@ -1076,6 +1095,7 @@
           <folding>
             <element signature="e#1947#1948#0" expanded="true" />
             <element signature="e#1973#1974#0" expanded="true" />
+            <element signature="e#2035#2036#0" expanded="true" />
             <element signature="e#2072#2073#0" expanded="true" />
           </folding>
         </state>
@@ -1114,14 +1134,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Knight.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Pawn.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1146,34 +1158,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Queen.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="22" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Rook.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="26" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Bishop.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="28" selection-start-line="10" selection-start-column="28" selection-end-line="10" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/PieceColor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="2" column="16" selection-start-line="2" selection-start-column="16" selection-end-line="2" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ChessFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="197" column="12" selection-start-line="197" selection-start-column="12" selection-end-line="197" selection-end-column="12" />
           <folding />
         </state>
       </provider>
@@ -1189,22 +1185,50 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ChessFrame.java">
+    <entry file="file://$PROJECT_DIR$/src/Rook.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="197" column="12" selection-start-line="197" selection-start-column="12" selection-end-line="197" selection-end-column="12" />
+          <caret line="10" column="26" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Queen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="19" column="22" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Bishop.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="10" column="28" selection-start-line="10" selection-start-column="28" selection-end-line="10" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Board.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.6182494">
-          <caret line="84" column="60" selection-start-line="84" selection-start-column="60" selection-end-line="84" selection-end-column="60" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="113" column="100" selection-start-line="113" selection-start-column="100" selection-end-line="113" selection-end-column="100" />
           <folding>
             <element signature="e#1947#1948#0" expanded="true" />
             <element signature="e#1973#1974#0" expanded="true" />
+            <element signature="e#2035#2036#0" expanded="true" />
             <element signature="e#2072#2073#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Knight.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6815643">
+          <caret line="26" column="9" selection-start-line="26" selection-start-column="9" selection-end-line="26" selection-end-column="9" />
+          <folding>
+            <element signature="e#215#216#0" expanded="true" />
+            <element signature="e#242#243#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -111,7 +111,7 @@ public class Board {
 	for (int row = 0; row < 8; row++) {
 	    for (int col = 0; col < 8; col++) {
 		if (board[row][col] != null) {
-		    builder.append(board[row][col].getPieceType() + board[row][col].getColor().toString());
+		    builder.append(board[row][col].getPieceType()).append(board[row][col].getColor());
 		}
 		else {
 		    builder.append("Empty");
