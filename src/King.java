@@ -19,6 +19,9 @@ public class King extends Piece{
         if (!super.validateMove(y, x, newY, newX, board)){
             return false;
         }
+        else if (board.isFriendly(newY, newX, color)){
+            return false;
+        }
         return (y - 1 <= newY && newY <= y + 1) && ( x-1<= newX && newX <= x+1);
     }
 }

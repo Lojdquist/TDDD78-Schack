@@ -1,3 +1,5 @@
+import java.awt.*;
+
 /**
  * Created by axelo225 and simho765 on 07/03/16.
  */
@@ -6,6 +8,7 @@ public class Board {
     private final static int HEIGTH = 8;
     private final static int WIDTH = 8;
     private PieceColor playerTurn;
+    private Point KingPos = null;
 
     public Board() {
         board = new Piece[8][8];
@@ -121,6 +124,47 @@ public class Board {
 
 	}
 	System.out.println(builder);
+    }
+
+    public void changeTurn(){
+	if (playerTurn == PieceColor.BLACK){
+	    playerTurn = PieceColor.WHITE;
+	 }
+	 else {
+	    playerTurn = PieceColor.BLACK;
+ 	}
+    }
+
+    public void findKing(PieceColor color){
+	for (int row = 0; row < HEIGTH; row++) {
+	    for (int col = 0; col < WIDTH; col++) {
+		if (board[row][col] != null) {
+		    if (board[row][col].getPieceType() == PieceType.King && board[row][col].getColor() == color) {
+			KingPos = new Point(row, col);
+		    }
+		}
+	    }
+	}
+
+
+    }
+
+    public boolean isCheck(PieceColor color){
+	findKing(color);
+	System.out.println(KingPos.x+ "  " + KingPos.y);
+
+	for (int row = 0; row < HEIGTH ; row++) {
+	    for (int col = 0; col < WIDTH; col++) {
+		if (board[row][col] != null) {
+		    if (color != board[row][col].getColor()) {
+			if (board[row][col].validateMove(row, col, KingPos.y, KingPos.x, this)) {
+			    return true;
+			}
+		    }
+		}
+	    }
+	}
+	return false;
     }
 }
 

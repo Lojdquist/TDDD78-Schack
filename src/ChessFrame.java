@@ -1,3 +1,4 @@
+import javafx.geometry.Dimension2D;
 import javafx.scene.paint.*;
 
 import javax.swing.*;
@@ -7,8 +8,9 @@ import java.awt.event.*;
 
 public class ChessFrame extends JFrame implements MouseListener, MouseMotionListener{
     private Board board;
-    public final static int SQUARE_WIDTH =80;
     private final static int BOARD_WIDTH = 8;
+    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    public final int SQUARE_WIDTH = Integer.parseInt(Math.round(screenSize.getHeight() / 10) + "");;
     private int xAdjustment;
     private int yAdjustment;
     private JLayeredPane layeredPane;
@@ -152,12 +154,14 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 
 	chessPiece.setVisible(false);
 	Component c =  chessBoard.findComponentAt(e.getX(), e.getY());
+	Piece currentPiece = board.getPiece(oldPosition.y/ SQUARE_WIDTH, oldPosition.x / SQUARE_WIDTH);
 	System.out.println(e.getX()/SQUARE_WIDTH +" -- " + e.getY()/SQUARE_WIDTH);
 	System.out.println(pieceColor);
 
  	if (c instanceof JLabel) {
 
-	    if (!board.getPiece(oldPosition.y/ SQUARE_WIDTH, oldPosition.x / SQUARE_WIDTH).validateMove(oldPosition.y/ SQUARE_WIDTH, oldPosition.x /SQUARE_WIDTH, e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH, board)){
+	    if (!currentPiece.validateMove(oldPosition.y/ SQUARE_WIDTH, oldPosition.x /SQUARE_WIDTH, e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH, board)
+		    || board.isCheck(pieceColor)){
 		Component oldc = chessBoard.findComponentAt(oldPosition);
 
 		PieceType oldPieceType = board.getPiece(oldPosition.y / SQUARE_WIDTH, oldPosition.x / SQUARE_WIDTH).getPieceType();
@@ -171,16 +175,12 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 		parent.add(chessPiece);
 		board.movePiece(oldPosition.y/SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH, e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH);
 		chessPiece.setVisible(true);
+		board.changeTurn();
 
-		if (board.getPlayerTurn() == PieceColor.BLACK){
-		    board.setPlayerTurn(PieceColor.WHITE);
-		}
-		else {
-		    board.setPlayerTurn(PieceColor.BLACK);
-		}
 	    }
  	}
-	else if (!board.getPiece(oldPosition.y /SQUARE_WIDTH, oldPosition.x / SQUARE_WIDTH).validateMove(oldPosition.y/ SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH, e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH, board)){
+	else if (!currentPiece.validateMove(oldPosition.y/ SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH, e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH, board)
+		|| board.isCheck(pieceColor)){
 	    Component oldc = chessBoard.findComponentAt(oldPosition);
 
 	    PieceType oldPieceType = board.getPiece(oldPosition.y / SQUARE_WIDTH, oldPosition.x / SQUARE_WIDTH).getPieceType();
@@ -191,13 +191,8 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 	    parent.add( chessPiece );
 	    board.movePiece(oldPosition.y/SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH, e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH);
 	    chessPiece.setVisible(true);
+	    board.changeTurn();
 
-	    if (board.getPlayerTurn() == PieceColor.BLACK){
-		board.setPlayerTurn(PieceColor.WHITE);
-	    }
-	    else {
-		board.setPlayerTurn(PieceColor.BLACK);
-	    }
  	}
 	board.printBoard();
     }
