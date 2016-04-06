@@ -25,35 +25,45 @@ public class Pawn extends Piece {
 
 	if (color == PieceColor.WHITE){
 	    if (!hasMoved) {
+		//if can take one or two steps forward, in starting position
 		if (((newY - y == 2 && newX == x && board.getPiece(newY - 1, newX) == null) || (newY - y == 1 && newX == x)) && board.getPiece(newY, newX) == null){
 		    hasMoved = true;
+		    return true;
 		}
+		//if can take an opponent, piece still in starting position
 		else if (newY - y == 1 && (newX == x + 1 || newX == x-1) && board.isOpponent(newY, newX, color)){
 		    hasMoved = true;
 		    return true;
 		}
-		return ((newY - y == 2 && newX == x && board.getPiece(newY - 1, newX) == null) || (newY - y == 1 && newX == x)) && board.getPiece(newY, newX) == null ;
+		return false;
 	    }
+	    //if can take an opponent, left starting position
 	    else if ((newY - y == 1 && (newX == x + 1 || newX == x-1)) && board.isOpponent(newY, newX, color)){
 		return true;
 	    }
+	    //if can move on step, left starting position
 	    return newY - y == 1 && newX == x && board.getPiece(newY, newX) == null;
 	}
 
 	else {
 	    if (!hasMoved){
+		//if can take one or two steps forward, in starting position
 		if (((y - newY == 2 && newX == x && board.getPiece(newY +1,newX) == null) || (y - newY == 1 && newX == x)) && board.getPiece(newY, newX) == null){
 		    hasMoved = true;
+		    return true;
 		}
+		//if can take opponent, piece in starting position
 		else if ((y - newY == 1 && (newX == x + 1 || newX == x-1)) && board.isOpponent(newY, newX, color)){
 		    hasMoved = true;
 		    return true;
 		}
-		return ((y - newY == 2 && newX == x && board.getPiece(newY +1,newX) == null) || (y - newY == 1 && newX == x)) && board.getPiece(newY, newX) == null;
+		return false;
 	    }
+	    //if can take opponent, left starting position
 	    else if (y - newY == 1 && (newX == x + 1 || newX == x-1) && board.isOpponent(newY, newX, color)){
 		return true;
 	    }
+	    //if can move one step forward, left starting position
 	    return y - newY == 1 && newX == x && board.getPiece(newY, newX) == null;
 	}
     }

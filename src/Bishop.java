@@ -26,12 +26,14 @@ public class Bishop extends Piece{
 	else if (board.isFriendly(newY, newX, color)){
 	    return false;
 	}
+	//if new move and old position is in a diagonal line from up left to down right
 	else if (newX - newY == x -y){
 	    if (xDiff > 0 && yDiff > 0){
 		return !isPieceInPathDownRight(y, x, newY, board);
 	    }
 	    else return !isPieceInPathUpLeft(y, x, newY, board);
 	}
+	//if new move and old position is in a diagonal line from down left to up right
 	else if (Math.abs(newX - x) == Math.abs(newY - y)){
 	    if (xDiff > 0 && yDiff < 0){
 		return !isPieceInPathUpRight(y, x, newY, board);
@@ -40,5 +42,4 @@ public class Bishop extends Piece{
 	}
 	return false;
     }
-
 }

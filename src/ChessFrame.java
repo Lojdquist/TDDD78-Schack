@@ -1,6 +1,3 @@
-import javafx.geometry.Dimension2D;
-import javafx.scene.paint.*;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.Color;
@@ -10,7 +7,7 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
     private Board board;
     private final static int BOARD_WIDTH = 8;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    public final int SQUARE_WIDTH = Integer.parseInt(Math.round(screenSize.getHeight() / 10) + "");;
+    public final int SQUARE_WIDTH = Integer.parseInt(Math.round(screenSize.getHeight() / 10) + "");
     private int xAdjustment;
     private int yAdjustment;
     private JLayeredPane layeredPane;
@@ -160,8 +157,7 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 
  	if (c instanceof JLabel) {
 
-	    if (!currentPiece.validateMove(oldPosition.y/ SQUARE_WIDTH, oldPosition.x /SQUARE_WIDTH, e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH, board)
-		    || board.isCheck(pieceColor)){
+	    if (!board.hasMovedPiece(oldPosition.y/ SQUARE_WIDTH, oldPosition.x /SQUARE_WIDTH, e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH)){
 		Component oldc = chessBoard.findComponentAt(oldPosition);
 
 		PieceType oldPieceType = board.getPiece(oldPosition.y / SQUARE_WIDTH, oldPosition.x / SQUARE_WIDTH).getPieceType();
@@ -173,14 +169,13 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 		Container parent = c.getParent();
 		parent.remove(0);
 		parent.add(chessPiece);
-		board.movePiece(oldPosition.y/SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH, e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH);
+		//board.movePiece(oldPosition.y/SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH, e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH);
 		chessPiece.setVisible(true);
 		board.changeTurn();
 
 	    }
  	}
-	else if (!currentPiece.validateMove(oldPosition.y/ SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH, e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH, board)
-		|| board.isCheck(pieceColor)){
+	else if (!board.hasMovedPiece(oldPosition.y/ SQUARE_WIDTH, oldPosition.x /SQUARE_WIDTH, e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH)){
 	    Component oldc = chessBoard.findComponentAt(oldPosition);
 
 	    PieceType oldPieceType = board.getPiece(oldPosition.y / SQUARE_WIDTH, oldPosition.x / SQUARE_WIDTH).getPieceType();
@@ -189,7 +184,7 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 	else {
 	    Container parent = (Container)c;
 	    parent.add( chessPiece );
-	    board.movePiece(oldPosition.y/SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH, e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH);
+	    //board.movePiece(oldPosition.y/SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH, e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH);
 	    chessPiece.setVisible(true);
 	    board.changeTurn();
 

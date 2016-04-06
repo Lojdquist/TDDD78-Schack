@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.Observable;
 
 /**
  * Created by axelo225 and simho765 on 07/03/16.
@@ -9,6 +10,7 @@ public class Board {
     private final static int WIDTH = 8;
     private PieceColor playerTurn;
     private Point KingPos = null;
+    private Point checkingPiece = null;
 
     public Board() {
         board = new Piece[8][8];
@@ -85,10 +87,6 @@ public class Board {
 	return playerTurn;
     }
 
-    public void setPlayerTurn(final PieceColor playerTurn) {
-	this.playerTurn = playerTurn;
-    }
-
     public boolean isFriendly(int y, int x, PieceColor color) {
 	if (board[y][x] != null){
 	    return board[y][x].getColor() == color;
@@ -107,6 +105,25 @@ public class Board {
 	Piece piece = board[y][x];
 	board[y][x] = null;
 	board[newY][newX] = piece;
+    }
+
+    public boolean hasMovedPiece(int y, int x, int newY, int newX){
+	Piece currentPiece = board[y][x];
+	Piece savedSquare = board[newY][newX];
+
+	if (!currentPiece.validateMove(y, x, newY, newX, this)){
+	    return false;
+	}
+	movePiece(y, x, newY, newX);
+	if (isCheck()){
+	    board[newY][newX] = savedSquare;
+	    board[y][x] = currentPiece;
+	    return false;
+	}
+
+	else {
+	    return true;
+	}
     }
 
     public void printBoard(){
@@ -135,12 +152,12 @@ public class Board {
  	}
     }
 
-    public void findKing(PieceColor color){
+    public void findKing(){
 	for (int row = 0; row < HEIGTH; row++) {
 	    for (int col = 0; col < WIDTH; col++) {
 		if (board[row][col] != null) {
-		    if (board[row][col].getPieceType() == PieceType.King && board[row][col].getColor() == color) {
-			KingPos = new Point(row, col);
+		    if (board[row][col].getPieceType() == PieceType.King && board[row][col].getColor() == playerTurn) {
+			KingPos = new Point(col, row);
 		    }
 		}
 	    }
@@ -149,21 +166,96 @@ public class Board {
 
     }
 
-    public boolean isCheck(PieceColor color){
-	findKing(color);
-	System.out.println(KingPos.x+ "  " + KingPos.y);
+    public boolean isCheck(){
+	findKing();
 
 	for (int row = 0; row < HEIGTH ; row++) {
 	    for (int col = 0; col < WIDTH; col++) {
 		if (board[row][col] != null) {
-		    if (color != board[row][col].getColor()) {
+		    if (playerTurn != board[row][col].getColor()) {
 			if (board[row][col].validateMove(row, col, KingPos.y, KingPos.x, this)) {
+			    System.out.println(playerTurn + "king is in check by" + row + " " + col + " " +  board[row][col].getPieceType());
+			    System.out.println("king position " + KingPos.y + " " + KingPos.x);
+			    checkingPiece = new Point(col, row);
 			    return true;
 			}
 		    }
 		}
 	    }
 	}
+	return false;
+    }
+
+    public boolean isCheckmate(){
+	findKing();
+
+	if (isCheck()){
+	    if (!canMoveKing()){
+		if (!canTakeCheckingPiece()){
+		    if (!canBlockCheckingPiece()){
+			return true;
+		    }
+		}
+
+	    }
+	}
+	return false;
+    }
+
+    public boolean canMoveKing(){
+	Piece King = board[KingPos.y][KingPos.x];
+
+	for (int i = -1; i < 2; i++) {
+	    for (int j = -1; j < 2; j++) {
+		if (King.validateMove(KingPos.y, KingPos.x, KingPos.y +i, KingPos.x + j, this)){
+		    Piece savedSquare = board[KingPos.y + i][KingPos.x +j];
+
+		    movePiece(KingPos.y, KingPos.x, KingPos.y +i, KingPos.x + j);
+
+		    if (isCheck()){
+			movePiece(KingPos.y +i, KingPos.x + j, KingPos.y, KingPos.x);
+			board[KingPos.y +i][KingPos.x + j] = savedSquare;
+		    }
+		    else {
+			movePiece(KingPos.y +i, KingPos.x + j, KingPos.y, KingPos.x);
+			board[KingPos.y +i][KingPos.x + j] = savedSquare;
+			return true;
+		    }
+		}
+	    }
+	}
+	return false;
+    }
+
+    public boolean canTakeCheckingPiece(){
+
+	for (int row = 0; row < HEIGTH; row++) {
+	    for (int col = 0; col < WIDTH; col++) {
+		if (board[row][col] != null){
+		    if (playerTurn == board[row][col].getColor()){
+			if (board[row][col].validateMove(row, col, checkingPiece.y, checkingPiece.x, this )){
+			    Piece opponentPiece = board[checkingPiece.y][checkingPiece.x];
+
+			    movePiece(row, col, checkingPiece.y, checkingPiece.x);
+			    if (isCheck()){
+				movePiece(checkingPiece.y, checkingPiece.x, row, col);
+				board[checkingPiece.y][checkingPiece.x] = opponentPiece;
+			    }
+			    else{
+				movePiece(checkingPiece.y, checkingPiece.x, row, col);
+				board[checkingPiece.y][checkingPiece.x] = opponentPiece;
+				return true;
+			    }
+			}
+		    }
+		}
+	    }
+	}
+
+	return false;
+    }
+
+    public boolean canBlockCheckingPiece(){
 	return false;
     }
 }
