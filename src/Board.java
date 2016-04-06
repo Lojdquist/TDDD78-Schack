@@ -1,5 +1,4 @@
 import java.awt.*;
-import java.util.Observable;
 
 /**
  * Created by axelo225 and simho765 on 07/03/16.
@@ -187,7 +186,6 @@ public class Board {
     }
 
     public boolean isCheckmate(){
-	findKing();
 
 	if (isCheck()){
 	    if (!canMoveKing()){
@@ -231,24 +229,14 @@ public class Board {
 
 	for (int row = 0; row < HEIGTH; row++) {
 	    for (int col = 0; col < WIDTH; col++) {
-		if (board[row][col] != null){
-		    if (playerTurn == board[row][col].getColor()){
-			if (board[row][col].validateMove(row, col, checkingPiece.y, checkingPiece.x, this )){
-			    Piece opponentPiece = board[checkingPiece.y][checkingPiece.x];
+		if (isFriendly(row, col, playerTurn)){
+		    if (board[row][col].validateMove(row, col, checkingPiece.y, checkingPiece.x, this )){
+			if (!isStillCheck(row, col, checkingPiece.y, checkingPiece.x)){
+			    return true;
 
-			    movePiece(row, col, checkingPiece.y, checkingPiece.x);
-			    if (isCheck()){
-				movePiece(checkingPiece.y, checkingPiece.x, row, col);
-				board[checkingPiece.y][checkingPiece.x] = opponentPiece;
-			    }
-			    else{
-				movePiece(checkingPiece.y, checkingPiece.x, row, col);
-				board[checkingPiece.y][checkingPiece.x] = opponentPiece;
-				return true;
-			    }
-			}
+		    	}
 		    }
-		}
+	    	}
 	    }
 	}
 
@@ -256,7 +244,49 @@ public class Board {
     }
 
     public boolean canBlockCheckingPiece(){
+
+	for (int row = 0; row < HEIGTH; row++) {
+	    for (int col = 0; col < WIDTH; col++) {
+		if (board[checkingPiece.y][checkingPiece.x].validateMove(checkingPiece.y, checkingPiece.x, row, col, this)){
+		    if (canPieceBlockChess(row, col)){
+			return true;
+		    }
+		}
+	    }
+	}
 	return false;
+    }
+
+    public boolean canPieceBlockChess(int blockingY, int blockingX){
+
+	for (int row = 0; row < HEIGTH; row++) {
+	    for (int col = 0; col < WIDTH; col++) {
+		if (isFriendly(row, col, playerTurn)){
+		    if (board[row][col].validateMove(row, col, blockingY, blockingX, this)){
+			if (!isStillCheck(row, col, blockingY, blockingX)){
+			    return true;
+			}
+		    }
+		}
+	    }
+	}
+	return false;
+    }
+
+    public boolean isStillCheck(int y, int x, int newY, int newX){
+	Piece opponentPiece = board[newY][newX];
+
+ 	movePiece(y, x, newY, newX);
+ 	if (isCheck()){
+	    movePiece(newY, newX, y, x);
+	    board[newY][newX] = opponentPiece;
+	    return true;
+ 	}
+ 	else{
+	    movePiece(newY, newX, y, x);
+	    board[newY][newX] = opponentPiece;
+	    return false;
+ 	}
     }
 }
 
