@@ -156,6 +156,7 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 	System.out.println(pieceColor);
 
  	if (c instanceof JLabel) {
+	    System.out.println("im a jLabel");
 
 	    if (!board.hasMovedPiece(oldPosition.y/ SQUARE_WIDTH, oldPosition.x /SQUARE_WIDTH, e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH)){
 		Component oldc = chessBoard.findComponentAt(oldPosition);

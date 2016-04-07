@@ -108,21 +108,22 @@ public class Board {
 
     public boolean hasMovedPiece(int y, int x, int newY, int newX){
 	Piece currentPiece = board[y][x];
-	Piece savedSquare = board[newY][newX];
 
-	if (!currentPiece.validateMove(y, x, newY, newX, this)){
-	    return false;
-	}
-	movePiece(y, x, newY, newX);
-	if (isCheck()){
-	    board[newY][newX] = savedSquare;
-	    board[y][x] = currentPiece;
-	    return false;
+	if (currentPiece.validateMove(y, x, newY, newX, this)) {
+	    Piece savedSquare = board[newY][newX];
+	    movePiece(y, x, newY, newX);
+
+	    if (isCheck()) {
+		board[newY][newX] = savedSquare;
+		board[y][x] = currentPiece;
+		return false;
+	    }
+	    else {
+		return true;
+	    }
 	}
 
-	else {
-	    return true;
-	}
+	return false;
     }
 
     public void printBoard(){
