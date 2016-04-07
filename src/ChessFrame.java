@@ -169,10 +169,11 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 		Container parent = c.getParent();
 		parent.remove(0);
 		parent.add(chessPiece);
-		//board.movePiece(oldPosition.y/SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH, e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH);
 		chessPiece.setVisible(true);
 		board.changeTurn();
-
+		if (board.isCheckmate()){
+		    System.out.println("Checkmate");
+		}
 	    }
  	}
 	else if (!board.hasMovedPiece(oldPosition.y/ SQUARE_WIDTH, oldPosition.x /SQUARE_WIDTH, e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH)){
@@ -184,9 +185,11 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 	else {
 	    Container parent = (Container)c;
 	    parent.add( chessPiece );
-	    //board.movePiece(oldPosition.y/SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH, e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH);
 	    chessPiece.setVisible(true);
 	    board.changeTurn();
+	    if (board.isCheckmate()){
+		System.out.println("Checkmate");
+	    }
 
  	}
 	board.printBoard();

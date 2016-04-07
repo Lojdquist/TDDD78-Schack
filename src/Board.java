@@ -202,21 +202,22 @@ public class Board {
 
     public boolean canMoveKing(){
 	Piece King = board[KingPos.y][KingPos.x];
+	Point KingPosition = KingPos;
 
 	for (int i = -1; i < 2; i++) {
 	    for (int j = -1; j < 2; j++) {
-		if (King.validateMove(KingPos.y, KingPos.x, KingPos.y +i, KingPos.x + j, this)){
-		    Piece savedSquare = board[KingPos.y + i][KingPos.x +j];
+		if (King.validateMove(KingPosition.y, KingPosition.x, KingPosition.y +i, KingPosition.x + j, this)){
+		    Piece savedSquare = board[KingPosition.y + i][KingPosition.x +j];
 
-		    movePiece(KingPos.y, KingPos.x, KingPos.y +i, KingPos.x + j);
+		    movePiece(KingPosition.y, KingPosition.x, KingPosition.y +i, KingPosition.x + j);
 
 		    if (isCheck()){
-			movePiece(KingPos.y +i, KingPos.x + j, KingPos.y, KingPos.x);
-			board[KingPos.y +i][KingPos.x + j] = savedSquare;
+			movePiece(KingPosition.y +i, KingPosition.x + j, KingPosition.y, KingPosition.x);
+			board[KingPosition.y +i][KingPosition.x + j] = savedSquare;
 		    }
 		    else {
-			movePiece(KingPos.y +i, KingPos.x + j, KingPos.y, KingPos.x);
-			board[KingPos.y +i][KingPos.x + j] = savedSquare;
+			movePiece(KingPosition.y +i, KingPosition.x + j, KingPosition.y, KingPosition.x);
+			board[KingPosition.y +i][KingPosition.x + j] = savedSquare;
 			return true;
 		    }
 		}
