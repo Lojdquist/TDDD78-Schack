@@ -290,5 +290,9 @@ public class Board {
 	    return false;
  	}
     }
+
+    public boolean isRochadePossible(){
+	return false;
+    }
 }
 

@@ -151,17 +151,17 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 
 	chessPiece.setVisible(false);
 	Component c =  chessBoard.findComponentAt(e.getX(), e.getY());
-	Piece currentPiece = board.getPiece(oldPosition.y/ SQUARE_WIDTH, oldPosition.x / SQUARE_WIDTH);
-	System.out.println(e.getX()/SQUARE_WIDTH +" -- " + e.getY()/SQUARE_WIDTH);
-	System.out.println(pieceColor);
+
+	int y = oldPosition.y/SQUARE_WIDTH;
+	int x = oldPosition.x/SQUARE_WIDTH;
+	int newY = e.getY()/SQUARE_WIDTH;
+	int newX = e.getX()/SQUARE_WIDTH;
 
  	if (c instanceof JLabel) {
-	    System.out.println("im a jLabel");
 
-	    if (!board.hasMovedPiece(oldPosition.y/ SQUARE_WIDTH, oldPosition.x /SQUARE_WIDTH, e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH)){
+	    if (!board.hasMovedPiece(y, x, newY, newX)){
 		Component oldc = chessBoard.findComponentAt(oldPosition);
-
-		PieceType oldPieceType = board.getPiece(oldPosition.y / SQUARE_WIDTH, oldPosition.x / SQUARE_WIDTH).getPieceType();
+		PieceType oldPieceType = board.getPiece(y, x).getPieceType();
 		addPiece(oldPieceType, (JPanel) oldc, pieceColor);
 
 	    }
@@ -173,27 +173,27 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 		chessPiece.setVisible(true);
 		board.changeTurn();
 		if (board.isCheckmate()){
-		    System.out.println("Checkmate");
+		    System.out.println("Checkmate " + pieceColor + " wins!");
 		}
 	    }
  	}
-	else if (!board.hasMovedPiece(oldPosition.y/ SQUARE_WIDTH, oldPosition.x /SQUARE_WIDTH, e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH)){
+	else if (!board.hasMovedPiece(y, x, newY, newX)){
 	    Component oldc = chessBoard.findComponentAt(oldPosition);
+	    PieceType oldPieceType = board.getPiece(y, x).getPieceType();
 
-	    PieceType oldPieceType = board.getPiece(oldPosition.y / SQUARE_WIDTH, oldPosition.x / SQUARE_WIDTH).getPieceType();
 	    addPiece(oldPieceType, (JPanel) oldc, pieceColor);
 	}
 	else {
-	    Container parent = (Container)c;
-	    parent.add( chessPiece );
+	    Container parent = (Container) c;
+	    parent.add(chessPiece);
 	    chessPiece.setVisible(true);
 	    board.changeTurn();
 	    if (board.isCheckmate()){
-		System.out.println("Checkmate");
+		System.out.println("Checkmate " + pieceColor + " wins!");
 	    }
 
  	}
-	board.printBoard();
+	//board.printBoard();
     }
 
     @Override public void mouseDragged(final MouseEvent e) {
