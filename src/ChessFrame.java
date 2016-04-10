@@ -101,7 +101,8 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 	JLabel label = null;
 
 	if (pieceType == PieceType.Pawn) {
-	    label = new JLabel(new ImageIcon("icons/pawn_black.jpg"));
+	    label = new JLabel();
+	    label.setIcon(new ImageIcon("/icons/pawn_black.jpg"));
 	}
 	else if (pieceType == PieceType.Rook){
 	    label = new JLabel("R " + color);
