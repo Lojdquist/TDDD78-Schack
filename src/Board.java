@@ -149,7 +149,7 @@ public class Board {
 
     }
 
-    public boolean isCheck(PieceColor color){
+   public boolean isCheck(PieceColor color){
 	findKing(color);
 	System.out.println(KingPos.x+ "  " + KingPos.y);
 
