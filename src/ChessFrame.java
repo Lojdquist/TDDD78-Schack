@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.Color;
 import java.awt.event.*;
 
+
 public class ChessFrame extends JFrame implements MouseListener, MouseMotionListener{
     private Board board;
     private final static int BOARD_WIDTH = 8;
@@ -102,22 +103,51 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 
 	if (pieceType == PieceType.Pawn) {
 	    label = new JLabel();
-	    label.setIcon(new ImageIcon("/icons/pawn_black.jpg"));
+	    if (color == PieceColor.BLACK){
+	    	label.setIcon(new ImageIcon(getClass().getResource("/icons/pawn_black.png")));
+	    }else{
+		label.setIcon(new ImageIcon(getClass().getResource("/icons/pawn_white.png")));
+	    }
 	}
 	else if (pieceType == PieceType.Rook){
-	    label = new JLabel("R " + color);
+	    label = new JLabel();
+	    if (color == PieceColor.BLACK){
+		label.setIcon(new ImageIcon(getClass().getResource("/icons/rook_black.png")));
+	    }else{
+		label.setIcon(new ImageIcon(getClass().getResource("/icons/rook_white.png")));
+	    }
 	}
 	else if (pieceType == PieceType.Knight){
-	    label = new JLabel("Kn " + color);
+	    label = new JLabel();
+	    if (color == PieceColor.BLACK){
+		label.setIcon(new ImageIcon(getClass().getResource("/icons/knight_black.png")));
+	    }else{
+		label.setIcon(new ImageIcon(getClass().getResource("/icons/knight_white.png")));
+	    }
 	}
 	else if (pieceType == PieceType.Queen){
-	    label = new JLabel("Q " + color);
+	    label = new JLabel();
+	    if (color == PieceColor.BLACK){
+		label.setIcon(new ImageIcon(getClass().getResource("/icons/queen_black.png")));
+	    }else{
+		label.setIcon(new ImageIcon(getClass().getResource("/icons/queen_white.png")));
+	    }
 	}
 	else if (pieceType == PieceType.King){
-	    label = new JLabel("K " + color);
+	    label = new JLabel();
+	    if (color == PieceColor.BLACK){
+		label.setIcon(new ImageIcon(getClass().getResource("/icons/king_black.png")));
+	    }else{
+		label.setIcon(new ImageIcon(getClass().getResource("/icons/king_white.png")));
+	    }
 	}
 	else if (pieceType == PieceType.Bishop){
-	    label = new JLabel("Bi " + color);
+	    label = new JLabel();
+	    if (color == PieceColor.BLACK){
+		label.setIcon(new ImageIcon(getClass().getResource("/icons/bishop_black.png")));
+	    }else{
+		label.setIcon(new ImageIcon(getClass().getResource("/icons/bishop_white.png")));
+	    }
 	}
 
 	panel.add(label);
