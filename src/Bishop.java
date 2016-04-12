@@ -3,11 +3,9 @@
  */
 public class Bishop extends Piece{
     public PieceColor color;
-
     public PieceColor getColor() {
 	return color;
     }
-
     public Bishop(PieceColor color) {
 	this.color = color;
     }

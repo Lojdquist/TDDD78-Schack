@@ -66,11 +66,11 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 		    if (col % 2 == 0) {
 			square.setBackground(Color.WHITE);
 		    } else {
-			square.setBackground(Color.BLACK);
+			square.setBackground(Color.GRAY);
 		    }
 		} else {
 		    if (col % 2 == 0) {
-			square.setBackground(Color.BLACK);
+			square.setBackground(Color.GRAY);
 		    } else {
 			square.setBackground(Color.WHITE);
 		    }
@@ -96,13 +96,19 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 	}
     }
 
+    private ImageIcon resizeIcons(ImageIcon icon){
+	Image img = icon.getImage();
+	Image newimg = img.getScaledInstance(SQUARE_WIDTH, SQUARE_WIDTH,  Image.SCALE_SMOOTH);
+	return new ImageIcon(newimg);
+    }
+
     private void addPiece(PieceType pieceType, JPanel panel, PieceColor color){
 	JLabel label = null;
 
 	if (pieceType == PieceType.Pawn) {
 	    ImageIcon icon = new ImageIcon("src/icons/knight_" + color + ".png");
 	    label = new JLabel("P " + color);
-	    label.setIcon(icon);
+	    //label.setIcon(icon);
 	}
 	else if (pieceType == PieceType.Rook){
 	    ImageIcon icon = new ImageIcon("src/icons/knight_" + color + ".png");
@@ -111,24 +117,22 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 	else if (pieceType == PieceType.Knight){
 	    ImageIcon icon = new ImageIcon("src/icons/knight_" + color + ".png");
 	    label = new JLabel();
-	    label.setIcon(icon);
-	    label.setIcon(icon);
-
+	    label.setIcon(resizeIcons(icon));
 	}
 	else if (pieceType == PieceType.Queen){
 	    ImageIcon icon = new ImageIcon("src/icons/knight_" + color + ".png");
 	    label = new JLabel("Q " + color);
-	    label.setIcon(icon);
+	    //label.setIcon(icon);
 	}
 	else if (pieceType == PieceType.King){
 	    ImageIcon icon = new ImageIcon("src/icons/knight_" + color + ".png");
 	    label = new JLabel("K " + color);
-	    label.setIcon(icon);
+	    //label.setIcon(icon);
 	}
 	else if (pieceType == PieceType.Bishop){
-	    ImageIcon icon = new ImageIcon("src/icons/knight_" + color + ".png");
+	    //ImageIcon icon = new ImageIcon("src/icons/knight_" + color + ".png");
 	    label = new JLabel("Bi " + color);
-	    label.setIcon(icon);
+	    //label.setIcon(icon);
 	}
 	panel.add(label);
     }
@@ -174,6 +178,10 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 	int newY = e.getY()/SQUARE_WIDTH;
 	int newX = e.getX()/SQUARE_WIDTH;
 
+	if (board.isRochade(newY, newX)){
+	    // check is rochade is possible, Move panels.
+	}
+
  	if (c instanceof JLabel) {
 
 	    if (!board.hasMovedPiece(y, x, newY, newX)){
@@ -210,7 +218,7 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 	    }
 
  	}
-	//board.printBoard();
+
     }
 
     @Override public void mouseDragged(final MouseEvent e) {
@@ -228,7 +236,7 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 			//chessBoard.add(square).setLocation(row*SQUARE_WIDTH, col*SQUARE_WIDTH);
 			square.setLocation(col * SQUARE_WIDTH, row * SQUARE_WIDTH);
 			square.setSize(SQUARE_WIDTH, SQUARE_WIDTH);
-			square.setBackground(Color.BLUE);
+			square.setBackground(new Color(250, 85, 85, 100));
 			square.setVisible(true);
 			layeredPane.add(square, JLayeredPane.DRAG_LAYER);
 		    }

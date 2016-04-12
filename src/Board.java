@@ -119,6 +119,7 @@ public class Board {
 		return false;
 	    }
 	    else {
+		board[newY][newX].hasMoved = false;
 		return true;
 	    }
 	}
@@ -291,15 +292,69 @@ public class Board {
  	}
     }
 
-    public boolean isRochadePossible(){
+    public boolean isLeftRochadePossible(){
 
 	if (playerTurn == PieceColor.WHITE){
 	    if (board[0][0].getPieceType() == PieceType.Rook && board[0][1] == null &&
-			board[0][2] == null &&  board[0][3].getPieceType() == PieceType.King){
+		board[0][2] == null &&  board[0][3].getPieceType() == PieceType.King){
+		if (!isCheck() && !isStillCheck(0,3,0,1) && !board[0][0].hasMoved
+		    && !board[0][3].hasMoved) {
+		    return true;
+		}
+	    }
+	    else{
+		if (board[7][0].getPieceType() == PieceType.Rook && board[7][1] == null &&
+		    board[7][2] == null &&  board[7][3].getPieceType() == PieceType.King){
+		    if (!isCheck() && !isStillCheck(7,3,7,1)  && !board[7][0].hasMoved
+			&& !board[7][3].hasMoved) {
+			return true;
+		    }
+		}
+	    }
+	}
+	return false;
+    }
+
+    public boolean isRightRochadePossible(){
+
+	if (playerTurn == PieceColor.WHITE){
+	    if (board[0][0].getPieceType() == PieceType.Rook && board[0][1] == null &&
+		board[0][2] == null &&  board[0][3].getPieceType() == PieceType.King){
+		if (!isCheck() && !isStillCheck(0,3,0,1) && !board[0][0].hasMoved
+			&& !board[0][3].hasMoved) {
+		    return true;
+		}
+	    }
+	    else{
+		if (board[7][0].getPieceType() == PieceType.Rook && board[7][1] == null &&
+		    board[7][2] == null &&  board[7][3].getPieceType() == PieceType.King){
+		    if (!isCheck() && !isStillCheck(7,3,7,1) && !board[7][0].hasMoved
+			    && !board[7][3].hasMoved) {
+			return true;
+		    }
+		}
+	    }
+	}
+	return false;
+    }
+
+    public boolean isRochade(int y,int x){
+	if (isFriendly(y, x, playerTurn) && (board[y][x].getPieceType() == PieceType.King
+		|| board[y][x].getPieceType() ==PieceType.Rook)){
+	    return true;
+	}
+	return false;
+    }
+
+    private boolean hasLeftrookMoved(PieceColor color){
+	if (color == PieceColor.BLACK){
+	    if (board[0][0].getPieceType() != PieceType.Rook){
 
 	    }
 	}
 	return false;
     }
 }
+
+
 
