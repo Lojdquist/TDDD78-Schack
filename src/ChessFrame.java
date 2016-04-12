@@ -16,10 +16,12 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
     private Dimension boardSize = new Dimension(SQUARE_WIDTH*BOARD_WIDTH, SQUARE_WIDTH*BOARD_WIDTH);
     private Point oldPosition = null;
     private PieceColor pieceColor;
+    private JPanel[][] possibleMoves;
 
     public ChessFrame(Board board){
 	super("Chess");
 	this.board = board;
+	possibleMoves = new JPanel[8][8];
 
 	layeredPane = new JLayeredPane();
 	getContentPane().add(layeredPane);
@@ -149,6 +151,9 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 
 	if (chessPiece == null) return;
 
+	for (int i = 0; i < layeredPane.getComponentsInLayer(JLayeredPane.DRAG_LAYER).length ; i++) {
+	    layeredPane.getComponent(i).setVisible(false);
+	}
 	chessPiece.setVisible(false);
 	Component c =  chessBoard.findComponentAt(e.getX(), e.getY());
 
@@ -199,6 +204,25 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
     @Override public void mouseDragged(final MouseEvent e) {
 	if (chessPiece == null) return;
 	chessPiece.setLocation(e.getX() + xAdjustment, e.getY() + yAdjustment);
+	Piece currentPiece = board.getPiece(oldPosition.y/SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH);
+
+	for (int row = 0; row < BOARD_WIDTH; row++) {
+	    for (int col = 0; col < BOARD_WIDTH; col++) {
+		if (currentPiece.validateMove(oldPosition.y/SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH, row, col, board)){
+		    if (!board.isOpponent(row, col, pieceColor)) {
+			JPanel square = new JPanel(new BorderLayout());
+			Color possibleMoves;
+
+			//chessBoard.add(square).setLocation(row*SQUARE_WIDTH, col*SQUARE_WIDTH);
+			square.setLocation(col * SQUARE_WIDTH, row * SQUARE_WIDTH);
+			square.setSize(SQUARE_WIDTH, SQUARE_WIDTH);
+			square.setBackground(Color.BLUE);
+			square.setVisible(true);
+			layeredPane.add(square, JLayeredPane.DRAG_LAYER);
+		    }
+		}
+	    }
+	}
 
     }
 

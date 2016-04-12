@@ -202,23 +202,23 @@ public class Board {
     }
 
     public boolean canMoveKing(){
-	Piece King = board[KingPos.y][KingPos.x];
-	Point KingPosition = KingPos;
+	Piece king = board[KingPos.y][KingPos.x];
+	Point kingPosition = KingPos;
 
 	for (int i = -1; i < 2; i++) {
 	    for (int j = -1; j < 2; j++) {
-		if (King.validateMove(KingPosition.y, KingPosition.x, KingPosition.y +i, KingPosition.x + j, this)){
-		    Piece savedSquare = board[KingPosition.y + i][KingPosition.x +j];
+		if (king.validateMove(kingPosition.y, kingPosition.x, kingPosition.y +i, kingPosition.x + j, this)){
+		    Piece savedSquare = board[kingPosition.y + i][kingPosition.x +j];
 
-		    movePiece(KingPosition.y, KingPosition.x, KingPosition.y +i, KingPosition.x + j);
+		    movePiece(kingPosition.y, kingPosition.x, kingPosition.y +i, kingPosition.x + j);
 
 		    if (isCheck()){
-			movePiece(KingPosition.y +i, KingPosition.x + j, KingPosition.y, KingPosition.x);
-			board[KingPosition.y +i][KingPosition.x + j] = savedSquare;
+			movePiece(kingPosition.y +i, kingPosition.x + j, kingPosition.y, kingPosition.x);
+			board[kingPosition.y +i][kingPosition.x + j] = savedSquare;
 		    }
 		    else {
-			movePiece(KingPosition.y +i, KingPosition.x + j, KingPosition.y, KingPosition.x);
-			board[KingPosition.y +i][KingPosition.x + j] = savedSquare;
+			movePiece(kingPosition.y +i, kingPosition.x + j, kingPosition.y, kingPosition.x);
+			board[kingPosition.y +i][kingPosition.x + j] = savedSquare;
 			return true;
 		    }
 		}
@@ -292,6 +292,13 @@ public class Board {
     }
 
     public boolean isRochadePossible(){
+
+	if (playerTurn == PieceColor.WHITE){
+	    if (board[0][0].getPieceType() == PieceType.Rook && board[0][1] == null &&
+			board[0][2] == null &&  board[0][3].getPieceType() == PieceType.King){
+
+	    }
+	}
 	return false;
     }
 }
