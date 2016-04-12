@@ -100,24 +100,36 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 	JLabel label = null;
 
 	if (pieceType == PieceType.Pawn) {
+	    ImageIcon icon = new ImageIcon("src/icons/knight_" + color + ".png");
 	    label = new JLabel("P " + color);
+	    label.setIcon(icon);
 	}
 	else if (pieceType == PieceType.Rook){
+	    ImageIcon icon = new ImageIcon("src/icons/knight_" + color + ".png");
 	    label = new JLabel("R " + color);
 	}
 	else if (pieceType == PieceType.Knight){
-	    label = new JLabel("Kn " + color);
+	    ImageIcon icon = new ImageIcon("src/icons/knight_" + color + ".png");
+	    label = new JLabel();
+	    label.setIcon(icon);
+	    label.setIcon(icon);
+
 	}
 	else if (pieceType == PieceType.Queen){
+	    ImageIcon icon = new ImageIcon("src/icons/knight_" + color + ".png");
 	    label = new JLabel("Q " + color);
+	    label.setIcon(icon);
 	}
 	else if (pieceType == PieceType.King){
+	    ImageIcon icon = new ImageIcon("src/icons/knight_" + color + ".png");
 	    label = new JLabel("K " + color);
+	    label.setIcon(icon);
 	}
 	else if (pieceType == PieceType.Bishop){
+	    ImageIcon icon = new ImageIcon("src/icons/knight_" + color + ".png");
 	    label = new JLabel("Bi " + color);
+	    label.setIcon(icon);
 	}
-
 	panel.add(label);
     }
 
