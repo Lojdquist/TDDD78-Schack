@@ -8,11 +8,12 @@ public class Board {
     private final static int HEIGTH = 8;
     private final static int WIDTH = 8;
     private PieceColor playerTurn;
-    private Point KingPos = null;
+    private Point kingPos = null;
     private Point checkingPiece = null;
 
     public Board() {
         board = new Piece[8][8];
+	playerTurn = PieceColor.WHITE;
     }
 
     public void createNewBoard(){
@@ -158,13 +159,11 @@ public class Board {
 	    for (int col = 0; col < WIDTH; col++) {
 		if (board[row][col] != null) {
 		    if (board[row][col].getPieceType() == PieceType.King && board[row][col].getColor() == playerTurn) {
-			KingPos = new Point(col, row);
+			kingPos = new Point(col, row);
 		    }
 		}
 	    }
 	}
-
-
     }
 
     public boolean isCheck(){
@@ -174,9 +173,9 @@ public class Board {
 	    for (int col = 0; col < WIDTH; col++) {
 		if (board[row][col] != null) {
 		    if (playerTurn != board[row][col].getColor()) {
-			if (board[row][col].validateMove(row, col, KingPos.y, KingPos.x, this)) {
+			if (board[row][col].validateMove(row, col, kingPos.y, kingPos.x, this)) {
 			    System.out.println(playerTurn + "king is in check by" + row + " " + col + " " +  board[row][col].getPieceType());
-			    System.out.println("king position " + KingPos.y + " " + KingPos.x);
+			    System.out.println("king position " + kingPos.y + " " + kingPos.x);
 			    checkingPiece = new Point(col, row);
 			    return true;
 			}
@@ -203,8 +202,8 @@ public class Board {
     }
 
     public boolean canMoveKing(){
-	Piece king = board[KingPos.y][KingPos.x];
-	Point kingPosition = KingPos;
+	Piece king = board[kingPos.y][kingPos.x];
+	Point kingPosition = kingPos;
 
 	for (int i = -1; i < 2; i++) {
 	    for (int j = -1; j < 2; j++) {
@@ -236,13 +235,11 @@ public class Board {
 		    if (board[row][col].validateMove(row, col, checkingPiece.y, checkingPiece.x, this )){
 			if (!isStillCheck(row, col, checkingPiece.y, checkingPiece.x)){
 			    return true;
-
 		    	}
 		    }
 	    	}
 	    }
 	}
-
 	return false;
     }
 
