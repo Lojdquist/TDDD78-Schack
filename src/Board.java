@@ -292,13 +292,13 @@ public class Board {
  	}
     }
 
-    public boolean isLeftRochadePossible(){
+    public boolean tryLeftCastling(){
 
 	if (playerTurn == PieceColor.WHITE) {
 	    if (board[0][0].getPieceType() == PieceType.Rook && board[0][1] == null &&
 		board[0][2] == null && board[0][3].getPieceType() == PieceType.King) {
 		if (!isCheck() && !isStillCheck(0, 3, 0, 1) && !board[0][0].hasMoved && !board[0][3].hasMoved) {
-		    doLeftRochade();
+		    doLeftCastling();
 		    return true;
 		}
 	    }
@@ -307,7 +307,7 @@ public class Board {
 	    if (board[7][0].getPieceType() == PieceType.Rook && board[7][1] == null &&
 		board[7][2] == null && board[7][3].getPieceType() == PieceType.King) {
 		if (!isCheck() && !isStillCheck(7, 3, 7, 1) && !board[7][0].hasMoved && !board[7][3].hasMoved) {
-		    doLeftRochade();
+		    doLeftCastling();
 		    return true;
 		}
 	    }
@@ -315,30 +315,30 @@ public class Board {
 	return false;
     }
 
-    public boolean isRightRochadePossible(){
+    public boolean tryRightCastling(){
 
-	if (playerTurn == PieceColor.WHITE){
-	    if (board[0][0].getPieceType() == PieceType.Rook && board[0][1] == null &&
-		board[0][2] == null &&  board[0][3].getPieceType() == PieceType.King){
-		if (!isCheck() && !isStillCheck(0,3,0,1) && !board[0][0].hasMoved
-			&& !board[0][3].hasMoved) {
+	if (playerTurn == PieceColor.WHITE) {
+	    if (board[0][7].getPieceType() == PieceType.Rook && board[0][6] == null &&
+		board[0][5] == null && board[0][4] == null && board[0][3].getPieceType() == PieceType.King) {
+		if (!isCheck() && !isStillCheck(0, 3, 0, 5) && !board[0][7].hasMoved && !board[0][3].hasMoved) {
+		    doRightCastling();
 		    return true;
 		}
 	    }
-	    else{
-		if (board[7][0].getPieceType() == PieceType.Rook && board[7][1] == null &&
-		    board[7][2] == null &&  board[7][3].getPieceType() == PieceType.King){
-		    if (!isCheck() && !isStillCheck(7,3,7,1) && !board[7][0].hasMoved
-			    && !board[7][3].hasMoved) {
-			return true;
+	}
+	else{
+	    if (board[7][7].getPieceType() == PieceType.Rook && board[7][6] == null &&
+		board[7][5] == null && board[7][4] == null &&  board[7][3].getPieceType() == PieceType.King){
+		if (!isCheck() && !isStillCheck(7,3,7,5) && !board[7][7].hasMoved && !board[7][3].hasMoved) {
+		    doRightCastling();
+		    return true;
 		    }
 		}
 	    }
-	}
 	return false;
     }
 
-    public boolean isRochade(int y,int x, int newY, int newX){
+    public boolean isCastling(int y, int x, int newY, int newX){
 	if (y == newY && x == newX){
 	    return false;
 	}
@@ -349,18 +349,45 @@ public class Board {
 	return false;
     }
 
-    private void doLeftRochade(){
+    private void doLeftCastling(){
 	if (playerTurn == PieceColor.WHITE){
 	    board[0][2] = board[0][0];
 	    board[0][0] = null;
 	    board[0][1] = board[0][3];
 	    board[0][3] = null;
+
+	    board[0][1].hasMoved = true;
+	    board[0][2].hasMoved = true;
 	}
 	else {
 	    board[7][2] = board[7][0];
 	    board[7][0] = null;
 	    board[7][1] = board[7][3];
 	    board[7][3] = null;
+
+	    board[7][2].hasMoved = true;
+	    board[7][1].hasMoved = true;
+	}
+    }
+
+    private void doRightCastling(){
+	if (playerTurn == PieceColor.WHITE){
+	    board[0][4] = board[0][7];
+	    board[0][7] = null;
+	    board[0][5] = board[0][3];
+	    board[0][3] = null;
+
+	    board[0][4].hasMoved = true;
+	    board[0][5].hasMoved = true;
+	}
+	else {
+	    board[7][4] = board[7][7];
+	    board[7][7] = null;
+	    board[7][5] = board[7][3];
+	    board[7][3] = null;
+
+	    board[7][4].hasMoved = true;
+	    board[7][5].hasMoved = true;
 	}
     }
 

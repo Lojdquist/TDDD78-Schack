@@ -158,10 +158,22 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 	panel.add(label);
     }
 
-    private void doLeftRochade(Component c){
+    private void paintCastling(Component c, boolean leftCastling){
+	int kingNewX;
+	int rookNewX;
+	
+	if (leftCastling){
+	    kingNewX = 1;
+	    rookNewX = 2;
+	}
+	else { //Right Castling
+	    kingNewX = 5;
+	    rookNewX = 4;
+	}
+	
 	if (pieceColor == PieceColor.WHITE) {
-	    Component kingsNewPos = chessBoard.findComponentAt(1*SQUARE_WIDTH, 0);
-	    Component rookNewPos = chessBoard.findComponentAt(2*SQUARE_WIDTH, 0);
+	    Component kingsNewPos = chessBoard.findComponentAt(kingNewX*SQUARE_WIDTH, 0);
+	    Component rookNewPos = chessBoard.findComponentAt(rookNewX*SQUARE_WIDTH, 0);
 
 	    addPiece(PieceType.King, (JPanel) kingsNewPos, pieceColor);
 
@@ -171,8 +183,8 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 
 	}
 	else{
-	    Component kingsNewPos = chessBoard.findComponentAt(1*SQUARE_WIDTH, 7*SQUARE_WIDTH);
-	    Component rookNewPos = chessBoard.findComponentAt(2*SQUARE_WIDTH, 7*SQUARE_WIDTH);
+	    Component kingsNewPos = chessBoard.findComponentAt(kingNewX*SQUARE_WIDTH, 7*SQUARE_WIDTH);
+	    Component rookNewPos = chessBoard.findComponentAt(rookNewX*SQUARE_WIDTH, 7*SQUARE_WIDTH);
 
 	    addPiece(PieceType.King, (JPanel) kingsNewPos, pieceColor);
 	    addPiece(PieceType.Rook, (JPanel) rookNewPos, pieceColor);
@@ -222,15 +234,19 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 	int x = oldPosition.x/SQUARE_WIDTH;
 	int newY = e.getY()/SQUARE_WIDTH;
 	int newX = e.getX()/SQUARE_WIDTH;
+	boolean leftCastling = false;
 
-	if (board.isRochade(y, x, newY, newX)){
-	    if (board.isLeftRochadePossible()){
-		doLeftRochade(c);
+	if (board.isCastling(y, x, newY, newX)){
+	    if (board.tryLeftCastling()){
+		leftCastling = true;
+		paintCastling(c, leftCastling);
 		board.changeTurn();
 		return;
 	    }
-	    else if (board.isRightRochadePossible()){
-
+	    else if (board.tryRightCastling()){
+		paintCastling(c, leftCastling);
+		board.changeTurn();
+		return;
 	    }
 	}
 
