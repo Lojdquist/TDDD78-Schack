@@ -96,6 +96,27 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 	}
     }
 
+    private void drawPossibleMoves(){
+	Piece currentPiece = board.getPiece(oldPosition.y/SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH);
+		for (int row = 0; row < BOARD_WIDTH; row++) {
+		    for (int col = 0; col < BOARD_WIDTH; col++) {
+			if (currentPiece.validateMove(oldPosition.y/SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH, row, col, board)){
+			    if (!board.isOpponent(row, col, pieceColor)) {
+				JPanel square = new JPanel(new BorderLayout());
+				Color possibleMoves;
+
+				//chessBoard.add(square).setLocation(row*SQUARE_WIDTH, col*SQUARE_WIDTH);
+				square.setLocation(col * SQUARE_WIDTH, row * SQUARE_WIDTH);
+				square.setSize(SQUARE_WIDTH, SQUARE_WIDTH);
+				square.setBackground(new Color(250, 85, 85, 100));
+				square.setVisible(true);
+				layeredPane.add(square, JLayeredPane.DRAG_LAYER);
+			    }
+			}
+		    }
+		}
+    }
+
     private ImageIcon resizeIcons(ImageIcon icon){
 	Image img = icon.getImage();
 	Image newimg = img.getScaledInstance(SQUARE_WIDTH, SQUARE_WIDTH,  Image.SCALE_SMOOTH);
@@ -137,6 +158,29 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 	panel.add(label);
     }
 
+    private void doLeftRochade(Component c){
+	if (pieceColor == PieceColor.WHITE) {
+	    Component kingsNewPos = chessBoard.findComponentAt(1*SQUARE_WIDTH, 0);
+	    Component rookNewPos = chessBoard.findComponentAt(2*SQUARE_WIDTH, 0);
+
+	    addPiece(PieceType.King, (JPanel) kingsNewPos, pieceColor);
+
+	    addPiece(PieceType.Rook, (JPanel) rookNewPos, pieceColor);
+
+	    c.getParent().remove(0);
+
+	}
+	else{
+	    Component kingsNewPos = chessBoard.findComponentAt(1*SQUARE_WIDTH, 7*SQUARE_WIDTH);
+	    Component rookNewPos = chessBoard.findComponentAt(2*SQUARE_WIDTH, 7*SQUARE_WIDTH);
+
+	    addPiece(PieceType.King, (JPanel) kingsNewPos, pieceColor);
+	    addPiece(PieceType.Rook, (JPanel) rookNewPos, pieceColor);
+
+	    c.getParent().remove(0);
+	}
+    }
+
 
     @Override public void mousePressed(final MouseEvent e) {
 	chessPiece = null;
@@ -160,6 +204,7 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 
 	chessPiece.setSize(chessPiece.getWidth(), chessPiece.getHeight());
 	layeredPane.add(chessPiece, JLayeredPane.DRAG_LAYER);
+	drawPossibleMoves();
 
     }
 
@@ -178,8 +223,15 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 	int newY = e.getY()/SQUARE_WIDTH;
 	int newX = e.getX()/SQUARE_WIDTH;
 
-	if (board.isRochade(newY, newX)){
-	    // check is rochade is possible, Move panels.
+	if (board.isRochade(y, x, newY, newX)){
+	    if (board.isLeftRochadePossible()){
+		doLeftRochade(c);
+		board.changeTurn();
+		return;
+	    }
+	    else if (board.isRightRochadePossible()){
+
+	    }
 	}
 
  	if (c instanceof JLabel) {
@@ -224,25 +276,7 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
     @Override public void mouseDragged(final MouseEvent e) {
 	if (chessPiece == null) return;
 	chessPiece.setLocation(e.getX() + xAdjustment, e.getY() + yAdjustment);
-	Piece currentPiece = board.getPiece(oldPosition.y/SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH);
 
-	for (int row = 0; row < BOARD_WIDTH; row++) {
-	    for (int col = 0; col < BOARD_WIDTH; col++) {
-		if (currentPiece.validateMove(oldPosition.y/SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH, row, col, board)){
-		    if (!board.isOpponent(row, col, pieceColor)) {
-			JPanel square = new JPanel(new BorderLayout());
-			Color possibleMoves;
-
-			//chessBoard.add(square).setLocation(row*SQUARE_WIDTH, col*SQUARE_WIDTH);
-			square.setLocation(col * SQUARE_WIDTH, row * SQUARE_WIDTH);
-			square.setSize(SQUARE_WIDTH, SQUARE_WIDTH);
-			square.setBackground(new Color(250, 85, 85, 100));
-			square.setVisible(true);
-			layeredPane.add(square, JLayeredPane.DRAG_LAYER);
-		    }
-		}
-	    }
-	}
 
     }
 

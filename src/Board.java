@@ -294,21 +294,21 @@ public class Board {
 
     public boolean isLeftRochadePossible(){
 
-	if (playerTurn == PieceColor.WHITE){
+	if (playerTurn == PieceColor.WHITE) {
 	    if (board[0][0].getPieceType() == PieceType.Rook && board[0][1] == null &&
-		board[0][2] == null &&  board[0][3].getPieceType() == PieceType.King){
-		if (!isCheck() && !isStillCheck(0,3,0,1) && !board[0][0].hasMoved
-		    && !board[0][3].hasMoved) {
+		board[0][2] == null && board[0][3].getPieceType() == PieceType.King) {
+		if (!isCheck() && !isStillCheck(0, 3, 0, 1) && !board[0][0].hasMoved && !board[0][3].hasMoved) {
+		    doLeftRochade();
 		    return true;
 		}
 	    }
-	    else{
-		if (board[7][0].getPieceType() == PieceType.Rook && board[7][1] == null &&
-		    board[7][2] == null &&  board[7][3].getPieceType() == PieceType.King){
-		    if (!isCheck() && !isStillCheck(7,3,7,1)  && !board[7][0].hasMoved
-			&& !board[7][3].hasMoved) {
-			return true;
-		    }
+	}
+	else {
+	    if (board[7][0].getPieceType() == PieceType.Rook && board[7][1] == null &&
+		board[7][2] == null && board[7][3].getPieceType() == PieceType.King) {
+		if (!isCheck() && !isStillCheck(7, 3, 7, 1) && !board[7][0].hasMoved && !board[7][3].hasMoved) {
+		    doLeftRochade();
+		    return true;
 		}
 	    }
 	}
@@ -338,22 +338,32 @@ public class Board {
 	return false;
     }
 
-    public boolean isRochade(int y,int x){
-	if (isFriendly(y, x, playerTurn) && (board[y][x].getPieceType() == PieceType.King
-		|| board[y][x].getPieceType() ==PieceType.Rook)){
+    public boolean isRochade(int y,int x, int newY, int newX){
+	if (y == newY && x == newX){
+	    return false;
+	}
+	else if (isFriendly(newY, newX, playerTurn) && (board[y][x].getPieceType() == PieceType.King
+		&& board[newY][newX].getPieceType() ==PieceType.Rook)){
 	    return true;
 	}
 	return false;
     }
 
-    private boolean hasLeftrookMoved(PieceColor color){
-	if (color == PieceColor.BLACK){
-	    if (board[0][0].getPieceType() != PieceType.Rook){
-
-	    }
+    private void doLeftRochade(){
+	if (playerTurn == PieceColor.WHITE){
+	    board[0][2] = board[0][0];
+	    board[0][0] = null;
+	    board[0][1] = board[0][3];
+	    board[0][3] = null;
 	}
-	return false;
+	else {
+	    board[7][2] = board[7][0];
+	    board[7][0] = null;
+	    board[7][1] = board[7][3];
+	    board[7][3] = null;
+	}
     }
+
 }
 
 
