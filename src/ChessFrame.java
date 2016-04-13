@@ -99,7 +99,7 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 	for (int row = 0; row < BOARD_WIDTH; row++) {
 	    for (int col = 0; col < BOARD_WIDTH; col++) {
 		if (currentPiece.validateMove(oldPosition.y/SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH, row, col, board)){
-		    if (!board.isOpponent(row, col, pieceColor)) {
+		    if (!board.isStillCheck(oldPosition.y/SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH, row, col)) {
 			JPanel square = new JPanel(new BorderLayout());
 
 			square.setLocation(col * SQUARE_WIDTH, row * SQUARE_WIDTH);
