@@ -201,6 +201,17 @@ public class Board {
 	return false;
     }
 
+    public boolean isStalemate(){
+	if (!canMoveKing()){
+	    if (!canTakeCheckingPiece()){
+		if (!canBlockCheckingPiece()){
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }
+
     public boolean canMoveKing(){
 	Piece king = board[kingPos.y][kingPos.x];
 	Point kingPosition = kingPos;
@@ -317,7 +328,7 @@ public class Board {
 	if (playerTurn == PieceColor.WHITE) {
 	    if (board[0][7].getPieceType() == PieceType.Rook && board[0][6] == null &&
 		board[0][5] == null && board[0][4] == null && board[0][3].getPieceType() == PieceType.King) {
-		if (!isCheck() && !isStillCheck(0, 3, 0, 5) && !board[0][7].hasMoved && !board[0][3].hasMoved) {
+		if (!isCheck() && !isStillCheck(0,3,0,5) && !board[0][7].hasMoved && !board[0][3].hasMoved) {
 		    doRightCastling();
 		    return true;
 		}

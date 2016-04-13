@@ -66,8 +66,8 @@
       <file leaf-file-name="ChessFrame.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ChessFrame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7471698">
-              <caret line="207" column="35" selection-start-line="207" selection-start-column="35" selection-end-line="207" selection-end-column="35" />
+            <state vertical-scroll-proportion="-1.3433962">
+              <caret line="255" column="40" selection-start-line="255" selection-start-column="40" selection-end-line="255" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -107,7 +107,7 @@
         <entry file="file://$PROJECT_DIR$/src/Board.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="10" column="19" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
+              <caret line="210" column="9" selection-start-line="210" selection-start-column="9" selection-end-line="210" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -718,7 +718,7 @@
     <option name="totallyTimeSpent" value="4537000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-11" y="-11" width="1942" height="1042" extended-state="7" />
+    <frame x="-11" y="-11" width="1942" height="1042" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1245,15 +1245,15 @@
     <entry file="file://$PROJECT_DIR$/src/Board.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="19" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
+          <caret line="210" column="9" selection-start-line="210" selection-start-column="9" selection-end-line="210" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ChessFrame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7471698">
-          <caret line="207" column="35" selection-start-line="207" selection-start-column="35" selection-end-line="207" selection-end-column="35" />
+        <state vertical-scroll-proportion="-1.3433962">
+          <caret line="255" column="40" selection-start-line="255" selection-start-column="40" selection-end-line="255" selection-end-column="40" />
           <folding />
         </state>
       </provider>

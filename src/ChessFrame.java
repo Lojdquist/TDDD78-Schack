@@ -268,6 +268,9 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 		if (board.isCheckmate()){
 		    System.out.println("Checkmate " + pieceColor + " wins!");
 		}
+		else if (board.isStalemate()){
+		    System.out.println("Stalemate draw!");
+		}
 	    }
  	}
 	else if (!board.hasMovedPiece(y, x, newY, newX)){
@@ -282,6 +285,9 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 	    board.changeTurn();
 	    if (board.isCheckmate()){
 		System.out.println("Checkmate " + pieceColor + " wins!");
+	    }
+	    else if (board.isStalemate()){
+		System.out.println("Stalemate draw!");
 	    }
 
  	}
