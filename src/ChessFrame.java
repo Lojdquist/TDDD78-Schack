@@ -1,17 +1,13 @@
-import javafx.geometry.Dimension2D;
-import javafx.scene.paint.*;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.Color;
 import java.awt.event.*;
 
-
 public class ChessFrame extends JFrame implements MouseListener, MouseMotionListener{
     private Board board;
     private final static int BOARD_WIDTH = 8;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    public final int SQUARE_WIDTH = Integer.parseInt(Math.round(screenSize.getHeight() / 10) + "");;
+    public final int SQUARE_WIDTH = Integer.parseInt(Math.round(screenSize.getHeight() / 10) + "");
     private int xAdjustment;
     private int yAdjustment;
     private JLayeredPane layeredPane;
@@ -20,10 +16,12 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
     private Dimension boardSize = new Dimension(SQUARE_WIDTH*BOARD_WIDTH, SQUARE_WIDTH*BOARD_WIDTH);
     private Point oldPosition = null;
     private PieceColor pieceColor;
+    private JPanel[][] possibleMoves;
 
     public ChessFrame(Board board){
 	super("Chess");
 	this.board = board;
+	possibleMoves = new JPanel[8][8];
 
 	layeredPane = new JLayeredPane();
 	getContentPane().add(layeredPane);
@@ -68,11 +66,11 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 		    if (col % 2 == 0) {
 			square.setBackground(Color.WHITE);
 		    } else {
-			square.setBackground(Color.BLACK);
+			square.setBackground(Color.GRAY);
 		    }
 		} else {
 		    if (col % 2 == 0) {
-			square.setBackground(Color.BLACK);
+			square.setBackground(Color.GRAY);
 		    } else {
 			square.setBackground(Color.WHITE);
 		    }
@@ -98,58 +96,44 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 	}
     }
 
+    private ImageIcon resizeIcons(ImageIcon icon){
+	Image img = icon.getImage();
+	Image newimg = img.getScaledInstance(SQUARE_WIDTH, SQUARE_WIDTH,  Image.SCALE_SMOOTH);
+	return new ImageIcon(newimg);
+    }
+
     private void addPiece(PieceType pieceType, JPanel panel, PieceColor color){
 	JLabel label = null;
 
 	if (pieceType == PieceType.Pawn) {
-	    label = new JLabel();
-	    if (color == PieceColor.BLACK){
-	    	label.setIcon(new ImageIcon(getClass().getResource("/icons/pawn_black.png")));
-	    }else{
-		label.setIcon(new ImageIcon(getClass().getResource("/icons/pawn_white.png")));
-	    }
+	    ImageIcon icon = new ImageIcon("src/icons/knight_" + color + ".png");
+	    label = new JLabel("P " + color);
+	    //label.setIcon(icon);
 	}
 	else if (pieceType == PieceType.Rook){
-	    label = new JLabel();
-	    if (color == PieceColor.BLACK){
-		label.setIcon(new ImageIcon(getClass().getResource("/icons/rook_black.png")));
-	    }else{
-		label.setIcon(new ImageIcon(getClass().getResource("/icons/rook_white.png")));
-	    }
+	    ImageIcon icon = new ImageIcon("src/icons/knight_" + color + ".png");
+	    label = new JLabel("R " + color);
 	}
 	else if (pieceType == PieceType.Knight){
+	    ImageIcon icon = new ImageIcon("src/icons/knight_" + color + ".png");
 	    label = new JLabel();
-	    if (color == PieceColor.BLACK){
-		label.setIcon(new ImageIcon(getClass().getResource("/icons/knight_black.png")));
-	    }else{
-		label.setIcon(new ImageIcon(getClass().getResource("/icons/knight_white.png")));
-	    }
+	    label.setIcon(resizeIcons(icon));
 	}
 	else if (pieceType == PieceType.Queen){
-	    label = new JLabel();
-	    if (color == PieceColor.BLACK){
-		label.setIcon(new ImageIcon(getClass().getResource("/icons/queen_black.png")));
-	    }else{
-		label.setIcon(new ImageIcon(getClass().getResource("/icons/queen_white.png")));
-	    }
+	    ImageIcon icon = new ImageIcon("src/icons/knight_" + color + ".png");
+	    label = new JLabel("Q " + color);
+	    //label.setIcon(icon);
 	}
 	else if (pieceType == PieceType.King){
-	    label = new JLabel();
-	    if (color == PieceColor.BLACK){
-		label.setIcon(new ImageIcon(getClass().getResource("/icons/king_black.png")));
-	    }else{
-		label.setIcon(new ImageIcon(getClass().getResource("/icons/king_white.png")));
-	    }
+	    ImageIcon icon = new ImageIcon("src/icons/knight_" + color + ".png");
+	    label = new JLabel("K " + color);
+	    //label.setIcon(icon);
 	}
 	else if (pieceType == PieceType.Bishop){
-	    label = new JLabel();
-	    if (color == PieceColor.BLACK){
-		label.setIcon(new ImageIcon(getClass().getResource("/icons/bishop_black.png")));
-	    }else{
-		label.setIcon(new ImageIcon(getClass().getResource("/icons/bishop_white.png")));
-	    }
+	    //ImageIcon icon = new ImageIcon("src/icons/knight_" + color + ".png");
+	    label = new JLabel("Bi " + color);
+	    //label.setIcon(icon);
 	}
-
 	panel.add(label);
     }
 
@@ -183,19 +167,26 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 
 	if (chessPiece == null) return;
 
+	for (int i = 0; i < layeredPane.getComponentsInLayer(JLayeredPane.DRAG_LAYER).length ; i++) {
+	    layeredPane.getComponent(i).setVisible(false);
+	}
 	chessPiece.setVisible(false);
 	Component c =  chessBoard.findComponentAt(e.getX(), e.getY());
-	Piece currentPiece = board.getPiece(oldPosition.y/ SQUARE_WIDTH, oldPosition.x / SQUARE_WIDTH);
-	System.out.println(e.getX()/SQUARE_WIDTH +" -- " + e.getY()/SQUARE_WIDTH);
-	System.out.println(pieceColor);
+
+	int y = oldPosition.y/SQUARE_WIDTH;
+	int x = oldPosition.x/SQUARE_WIDTH;
+	int newY = e.getY()/SQUARE_WIDTH;
+	int newX = e.getX()/SQUARE_WIDTH;
+
+	if (board.isRochade(newY, newX)){
+	    // check is rochade is possible, Move panels.
+	}
 
  	if (c instanceof JLabel) {
 
-	    if (!currentPiece.validateMove(oldPosition.y/ SQUARE_WIDTH, oldPosition.x /SQUARE_WIDTH, e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH, board)
-		    || board.isCheck(pieceColor)){
+	    if (!board.hasMovedPiece(y, x, newY, newX)){
 		Component oldc = chessBoard.findComponentAt(oldPosition);
-
-		PieceType oldPieceType = board.getPiece(oldPosition.y / SQUARE_WIDTH, oldPosition.x / SQUARE_WIDTH).getPieceType();
+		PieceType oldPieceType = board.getPiece(y, x).getPieceType();
 		addPiece(oldPieceType, (JPanel) oldc, pieceColor);
 
 	    }
@@ -204,33 +195,54 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 		Container parent = c.getParent();
 		parent.remove(0);
 		parent.add(chessPiece);
-		board.movePiece(oldPosition.y/SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH, e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH);
 		chessPiece.setVisible(true);
 		board.changeTurn();
-
+		if (board.isCheckmate()){
+		    System.out.println("Checkmate " + pieceColor + " wins!");
+		}
 	    }
  	}
-	else if (!currentPiece.validateMove(oldPosition.y/ SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH, e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH, board)
-		|| board.isCheck(pieceColor)){
+	else if (!board.hasMovedPiece(y, x, newY, newX)){
 	    Component oldc = chessBoard.findComponentAt(oldPosition);
+	    PieceType oldPieceType = board.getPiece(y, x).getPieceType();
 
-	    PieceType oldPieceType = board.getPiece(oldPosition.y / SQUARE_WIDTH, oldPosition.x / SQUARE_WIDTH).getPieceType();
 	    addPiece(oldPieceType, (JPanel) oldc, pieceColor);
 	}
 	else {
-	    Container parent = (Container)c;
-	    parent.add( chessPiece );
-	    board.movePiece(oldPosition.y/SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH, e.getY()/SQUARE_WIDTH, e.getX()/SQUARE_WIDTH);
+	    Container parent = (Container) c;
+	    parent.add(chessPiece);
 	    chessPiece.setVisible(true);
 	    board.changeTurn();
+	    if (board.isCheckmate()){
+		System.out.println("Checkmate " + pieceColor + " wins!");
+	    }
 
  	}
-	board.printBoard();
+
     }
 
     @Override public void mouseDragged(final MouseEvent e) {
 	if (chessPiece == null) return;
 	chessPiece.setLocation(e.getX() + xAdjustment, e.getY() + yAdjustment);
+	Piece currentPiece = board.getPiece(oldPosition.y/SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH);
+
+	for (int row = 0; row < BOARD_WIDTH; row++) {
+	    for (int col = 0; col < BOARD_WIDTH; col++) {
+		if (currentPiece.validateMove(oldPosition.y/SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH, row, col, board)){
+		    if (!board.isOpponent(row, col, pieceColor)) {
+			JPanel square = new JPanel(new BorderLayout());
+			Color possibleMoves;
+
+			//chessBoard.add(square).setLocation(row*SQUARE_WIDTH, col*SQUARE_WIDTH);
+			square.setLocation(col * SQUARE_WIDTH, row * SQUARE_WIDTH);
+			square.setSize(SQUARE_WIDTH, SQUARE_WIDTH);
+			square.setBackground(new Color(250, 85, 85, 100));
+			square.setVisible(true);
+			layeredPane.add(square, JLayeredPane.DRAG_LAYER);
+		    }
+		}
+	    }
+	}
 
     }
 
