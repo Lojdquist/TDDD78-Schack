@@ -202,12 +202,8 @@ public class Board {
     }
 
     public boolean isStalemate(){
-	if (!canMoveKing()){
-	    if (!canTakeCheckingPiece()){
-		if (!canBlockCheckingPiece()){
-		    return true;
-		}
-	    }
+	if (!canMoveAnyPiece()){
+	    return true;
 	}
 	return false;
     }
@@ -280,6 +276,24 @@ public class Board {
 		    }
 		}
 	    }
+	}
+	return false;
+    }
+
+    public boolean canMoveAnyPiece(){
+	for (int row = 0; row < HEIGTH; row++) {
+	    for (int col = 0; col < WIDTH; col++) {
+		if (isFriendly(row, col, playerTurn)){
+		    for (int newY = 0; newY < HEIGTH; newY++) {
+			for (int newX = 0; newX < WIDTH; newX++) {
+			    if (board[row][col].validateMove(row, col, newY, newX, this) && !isStillCheck(row, col, newY, newX)){
+				return true;
+			    }
+			}
+		    }
+		}
+	    }
+
 	}
 	return false;
     }

@@ -63,11 +63,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ChessFrame.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ChessFrame.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ChessFrame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.3433962">
-              <caret line="255" column="40" selection-start-line="255" selection-start-column="40" selection-end-line="255" selection-end-column="40" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="232" column="43" selection-start-line="232" selection-start-column="43" selection-end-line="232" selection-end-column="43" />
               <folding />
             </state>
           </provider>
@@ -103,11 +103,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Board.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Board.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Board.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="210" column="9" selection-start-line="210" selection-start-column="9" selection-end-line="210" selection-end-column="9" />
+            <state vertical-scroll-proportion="3.5811322">
+              <caret line="288" column="93" selection-start-line="288" selection-start-column="93" selection-end-line="288" selection-end-column="93" />
               <folding />
             </state>
           </provider>
@@ -166,8 +166,8 @@
         <option value="$PROJECT_DIR$/src/Pawn.java" />
         <option value="$PROJECT_DIR$/src/Bishop.java" />
         <option value="$PROJECT_DIR$/src/Piece.java" />
-        <option value="$PROJECT_DIR$/src/Board.java" />
         <option value="$PROJECT_DIR$/src/ChessFrame.java" />
+        <option value="$PROJECT_DIR$/src/Board.java" />
       </list>
     </option>
   </component>
@@ -1226,14 +1226,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/King.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Bishop.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1242,18 +1234,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Board.java">
+    <entry file="file://$PROJECT_DIR$/src/King.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="210" column="9" selection-start-line="210" selection-start-column="9" selection-end-line="210" selection-end-column="9" />
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ChessFrame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.3433962">
-          <caret line="255" column="40" selection-start-line="255" selection-start-column="40" selection-end-line="255" selection-end-column="40" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="232" column="43" selection-start-line="232" selection-start-column="43" selection-end-line="232" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Board.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.5811322">
+          <caret line="288" column="93" selection-start-line="288" selection-start-column="93" selection-end-line="288" selection-end-column="93" />
           <folding />
         </state>
       </provider>
