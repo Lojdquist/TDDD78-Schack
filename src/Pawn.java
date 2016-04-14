@@ -3,10 +3,7 @@
  */
 public class Pawn extends Piece {
 
-    private boolean hasMoved;
     public PieceColor color;
-    private final static int WHITEPAWNROW = 1;
-    private final static int BLACKPAWNROW = 6;
 
     public PieceColor getColor() {
 	return color ;
@@ -14,7 +11,6 @@ public class Pawn extends Piece {
 
     public Pawn(PieceColor color) {
 	this.color = color;
-	hasMoved = false;
     }
 
     @Override
@@ -27,27 +23,27 @@ public class Pawn extends Piece {
 
 	if (color == PieceColor.WHITE) {
 	    //if can take one or two steps forward, in starting position
-	    if (newY - y == 2 && newX == x && board.getPiece(newY - 1, newX) == null && y == WHITEPAWNROW) {
+	    if (newY - y == 2 && newX == x && board.getPiece(newY - 1, newX) == null && !hasMoved && board.getPiece(newY, newX) == null) {
 		return true;
 	    }
-	    //if can take an opponent, has left starting position
+	    //if can take an opponent
 	    else if ((newY - y == 1 && (newX == x + 1 || newX == x - 1)) && board.isOpponent(newY, newX, color)) {
 		return true;
 	    }
-	    //if can move one step, has left starting position
+	    //if can move one step
 	    return newY - y == 1 && newX == x && board.getPiece(newY, newX) == null;
 	}
 	else {//Black
 
 	    //if can take one or two steps forward, in starting position
-	    if (y - newY == 2 && newX == x && board.getPiece(newY + 1, x) == null && y == BLACKPAWNROW) {
+	    if (y - newY == 2 && newX == x && board.getPiece(newY + 1, x) == null && !hasMoved && board.getPiece(newY, newX) == null) {
 		return true;
 	    }
-	    //if can take opponent, left starting position
+	    //if can take opponent
 	    else if (y - newY == 1 && (newX == x + 1 || newX == x - 1) && board.isOpponent(newY, newX, color)) {
 		return true;
 	    }
-	    //if can move one step forward, left starting position
+	    //if can move one step forward
 	    return y - newY == 1 && newX == x && board.getPiece(newY, newX) == null;
 	}
     }

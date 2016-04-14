@@ -8,11 +8,12 @@ public class Board {
     private final static int HEIGTH = 8;
     private final static int WIDTH = 8;
     private PieceColor playerTurn;
-    private Point KingPos = null;
+    private Point kingPos = null;
     private Point checkingPiece = null;
 
     public Board() {
         board = new Piece[8][8];
+	playerTurn = PieceColor.WHITE;
     }
 
     public void createNewBoard(){
@@ -119,7 +120,7 @@ public class Board {
 		return false;
 	    }
 	    else {
-		board[newY][newX].hasMoved = false;
+		board[newY][newX].hasMoved = true;
 		return true;
 	    }
 	}
@@ -158,13 +159,11 @@ public class Board {
 	    for (int col = 0; col < WIDTH; col++) {
 		if (board[row][col] != null) {
 		    if (board[row][col].getPieceType() == PieceType.King && board[row][col].getColor() == playerTurn) {
-			KingPos = new Point(col, row);
+			kingPos = new Point(col, row);
 		    }
 		}
 	    }
 	}
-
-
     }
 
     public boolean isCheck(){
@@ -174,9 +173,9 @@ public class Board {
 	    for (int col = 0; col < WIDTH; col++) {
 		if (board[row][col] != null) {
 		    if (playerTurn != board[row][col].getColor()) {
-			if (board[row][col].validateMove(row, col, KingPos.y, KingPos.x, this)) {
+			if (board[row][col].validateMove(row, col, kingPos.y, kingPos.x, this)) {
 			    System.out.println(playerTurn + "king is in check by" + row + " " + col + " " +  board[row][col].getPieceType());
-			    System.out.println("king position " + KingPos.y + " " + KingPos.x);
+			    System.out.println("king position " + kingPos.y + " " + kingPos.x);
 			    checkingPiece = new Point(col, row);
 			    return true;
 			}
@@ -202,9 +201,16 @@ public class Board {
 	return false;
     }
 
+    public boolean isStalemate(){
+	if (!canMoveAnyPiece()){
+	    return true;
+	}
+	return false;
+    }
+
     public boolean canMoveKing(){
-	Piece king = board[KingPos.y][KingPos.x];
-	Point kingPosition = KingPos;
+	Piece king = board[kingPos.y][kingPos.x];
+	Point kingPosition = kingPos;
 
 	for (int i = -1; i < 2; i++) {
 	    for (int j = -1; j < 2; j++) {
@@ -236,13 +242,11 @@ public class Board {
 		    if (board[row][col].validateMove(row, col, checkingPiece.y, checkingPiece.x, this )){
 			if (!isStillCheck(row, col, checkingPiece.y, checkingPiece.x)){
 			    return true;
-
 		    	}
 		    }
 	    	}
 	    }
 	}
-
 	return false;
     }
 
@@ -276,6 +280,24 @@ public class Board {
 	return false;
     }
 
+    public boolean canMoveAnyPiece(){
+	for (int row = 0; row < HEIGTH; row++) {
+	    for (int col = 0; col < WIDTH; col++) {
+		if (isFriendly(row, col, playerTurn)){
+		    for (int newY = 0; newY < HEIGTH; newY++) {
+			for (int newX = 0; newX < WIDTH; newX++) {
+			    if (board[row][col].validateMove(row, col, newY, newX, this) && !isStillCheck(row, col, newY, newX)){
+				return true;
+			    }
+			}
+		    }
+		}
+	    }
+
+	}
+	return false;
+    }
+
     public boolean isStillCheck(int y, int x, int newY, int newX){
 	Piece opponentPiece = board[newY][newX];
 
@@ -292,68 +314,105 @@ public class Board {
  	}
     }
 
-    public boolean isLeftRochadePossible(){
+    public boolean tryLeftCastling(){
 
-	if (playerTurn == PieceColor.WHITE){
+	if (playerTurn == PieceColor.WHITE) {
 	    if (board[0][0].getPieceType() == PieceType.Rook && board[0][1] == null &&
-		board[0][2] == null &&  board[0][3].getPieceType() == PieceType.King){
-		if (!isCheck() && !isStillCheck(0,3,0,1) && !board[0][0].hasMoved
-		    && !board[0][3].hasMoved) {
+		board[0][2] == null && board[0][3].getPieceType() == PieceType.King) {
+		if (!isCheck() && !isStillCheck(0, 3, 0, 1) && !board[0][0].hasMoved && !board[0][3].hasMoved) {
+		    doLeftCastling();
 		    return true;
 		}
 	    }
-	    else{
-		if (board[7][0].getPieceType() == PieceType.Rook && board[7][1] == null &&
-		    board[7][2] == null &&  board[7][3].getPieceType() == PieceType.King){
-		    if (!isCheck() && !isStillCheck(7,3,7,1)  && !board[7][0].hasMoved
-			&& !board[7][3].hasMoved) {
-			return true;
-		    }
+	}
+	else {
+	    if (board[7][0].getPieceType() == PieceType.Rook && board[7][1] == null &&
+		board[7][2] == null && board[7][3].getPieceType() == PieceType.King) {
+		if (!isCheck() && !isStillCheck(7, 3, 7, 1) && !board[7][0].hasMoved && !board[7][3].hasMoved) {
+		    doLeftCastling();
+		    return true;
 		}
 	    }
 	}
 	return false;
     }
 
-    public boolean isRightRochadePossible(){
+    public boolean tryRightCastling(){
 
-	if (playerTurn == PieceColor.WHITE){
-	    if (board[0][0].getPieceType() == PieceType.Rook && board[0][1] == null &&
-		board[0][2] == null &&  board[0][3].getPieceType() == PieceType.King){
-		if (!isCheck() && !isStillCheck(0,3,0,1) && !board[0][0].hasMoved
-			&& !board[0][3].hasMoved) {
+	if (playerTurn == PieceColor.WHITE) {
+	    if (board[0][7].getPieceType() == PieceType.Rook && board[0][6] == null &&
+		board[0][5] == null && board[0][4] == null && board[0][3].getPieceType() == PieceType.King) {
+		if (!isCheck() && !isStillCheck(0,3,0,5) && !board[0][7].hasMoved && !board[0][3].hasMoved) {
+		    doRightCastling();
 		    return true;
 		}
 	    }
-	    else{
-		if (board[7][0].getPieceType() == PieceType.Rook && board[7][1] == null &&
-		    board[7][2] == null &&  board[7][3].getPieceType() == PieceType.King){
-		    if (!isCheck() && !isStillCheck(7,3,7,1) && !board[7][0].hasMoved
-			    && !board[7][3].hasMoved) {
-			return true;
+	}
+	else{
+	    if (board[7][7].getPieceType() == PieceType.Rook && board[7][6] == null &&
+		board[7][5] == null && board[7][4] == null &&  board[7][3].getPieceType() == PieceType.King){
+		if (!isCheck() && !isStillCheck(7,3,7,5) && !board[7][7].hasMoved && !board[7][3].hasMoved) {
+		    doRightCastling();
+		    return true;
 		    }
 		}
 	    }
-	}
 	return false;
     }
 
-    public boolean isRochade(int y,int x){
-	if (isFriendly(y, x, playerTurn) && (board[y][x].getPieceType() == PieceType.King
-		|| board[y][x].getPieceType() ==PieceType.Rook)){
+    public boolean isCastling(int y, int x, int newY, int newX){
+	if (y == newY && x == newX){
+	    return false;
+	}
+	else if (isFriendly(newY, newX, playerTurn) && (board[y][x].getPieceType() == PieceType.King
+		&& board[newY][newX].getPieceType() ==PieceType.Rook)){
 	    return true;
 	}
 	return false;
     }
 
-    private boolean hasLeftrookMoved(PieceColor color){
-	if (color == PieceColor.BLACK){
-	    if (board[0][0].getPieceType() != PieceType.Rook){
+    private void doLeftCastling(){
+	if (playerTurn == PieceColor.WHITE){
+	    board[0][2] = board[0][0];
+	    board[0][0] = null;
+	    board[0][1] = board[0][3];
+	    board[0][3] = null;
 
-	    }
+	    board[0][1].hasMoved = true;
+	    board[0][2].hasMoved = true;
 	}
-	return false;
+	else {
+	    board[7][2] = board[7][0];
+	    board[7][0] = null;
+	    board[7][1] = board[7][3];
+	    board[7][3] = null;
+
+	    board[7][2].hasMoved = true;
+	    board[7][1].hasMoved = true;
+	}
     }
+
+    private void doRightCastling(){
+	if (playerTurn == PieceColor.WHITE){
+	    board[0][4] = board[0][7];
+	    board[0][7] = null;
+	    board[0][5] = board[0][3];
+	    board[0][3] = null;
+
+	    board[0][4].hasMoved = true;
+	    board[0][5].hasMoved = true;
+	}
+	else {
+	    board[7][4] = board[7][7];
+	    board[7][7] = null;
+	    board[7][5] = board[7][3];
+	    board[7][3] = null;
+
+	    board[7][4].hasMoved = true;
+	    board[7][5].hasMoved = true;
+	}
+    }
+
 }
 
 

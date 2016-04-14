@@ -7,7 +7,7 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
     private Board board;
     private final static int BOARD_WIDTH = 8;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    public final int SQUARE_WIDTH = Integer.parseInt(Math.round(screenSize.getHeight() / 10) + "");
+    public final int SQUARE_WIDTH = (int) Math.round(screenSize.getHeight() / 10);
     private int xAdjustment;
     private int yAdjustment;
     private JLayeredPane layeredPane;
@@ -16,12 +16,10 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
     private Dimension boardSize = new Dimension(SQUARE_WIDTH*BOARD_WIDTH, SQUARE_WIDTH*BOARD_WIDTH);
     private Point oldPosition = null;
     private PieceColor pieceColor;
-    private JPanel[][] possibleMoves;
 
     public ChessFrame(Board board){
 	super("Chess");
 	this.board = board;
-	possibleMoves = new JPanel[8][8];
 
 	layeredPane = new JLayeredPane();
 	getContentPane().add(layeredPane);
@@ -96,6 +94,25 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 	}
     }
 
+    private void drawPossibleMoves(){
+	Piece currentPiece = board.getPiece(oldPosition.y/SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH);
+	for (int row = 0; row < BOARD_WIDTH; row++) {
+	    for (int col = 0; col < BOARD_WIDTH; col++) {
+		if (currentPiece.validateMove(oldPosition.y/SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH, row, col, board)){
+		    if (!board.isStillCheck(oldPosition.y/SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH, row, col)) {
+			JPanel square = new JPanel(new BorderLayout());
+
+			square.setLocation(col * SQUARE_WIDTH, row * SQUARE_WIDTH);
+			square.setSize(SQUARE_WIDTH, SQUARE_WIDTH);
+			square.setBackground(new Color(250, 85, 85, 100));
+			square.setVisible(true);
+			layeredPane.add(square, JLayeredPane.DRAG_LAYER);
+		    }
+		}
+	    }
+	}
+    }
+
     private ImageIcon resizeIcons(ImageIcon icon){
 	Image img = icon.getImage();
 	Image newimg = img.getScaledInstance(SQUARE_WIDTH, SQUARE_WIDTH,  Image.SCALE_SMOOTH);
@@ -106,13 +123,14 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 	JLabel label = null;
 
 	if (pieceType == PieceType.Pawn) {
-	    ImageIcon icon = new ImageIcon("src/icons/knight_" + color + ".png");
-	    label = new JLabel("P " + color);
-	    //label.setIcon(icon);
+	    ImageIcon icon = new ImageIcon("src/icons/pawn_" + color + ".png");
+	    label = new JLabel();
+	    label.setIcon(resizeIcons(icon));
 	}
 	else if (pieceType == PieceType.Rook){
-	    ImageIcon icon = new ImageIcon("src/icons/knight_" + color + ".png");
-	    label = new JLabel("R " + color);
+	    ImageIcon icon = new ImageIcon("src/icons/rook_" + color + ".png");
+	    label = new JLabel();
+	    label.setIcon(resizeIcons(icon));
 	}
 	else if (pieceType == PieceType.Knight){
 	    ImageIcon icon = new ImageIcon("src/icons/knight_" + color + ".png");
@@ -120,21 +138,62 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 	    label.setIcon(resizeIcons(icon));
 	}
 	else if (pieceType == PieceType.Queen){
-	    ImageIcon icon = new ImageIcon("src/icons/knight_" + color + ".png");
-	    label = new JLabel("Q " + color);
-	    //label.setIcon(icon);
+	    ImageIcon icon = new ImageIcon("src/icons/queen_" + color + ".png");
+	    label = new JLabel();
+	    label.setIcon(resizeIcons(icon));
 	}
 	else if (pieceType == PieceType.King){
-	    ImageIcon icon = new ImageIcon("src/icons/knight_" + color + ".png");
-	    label = new JLabel("K " + color);
-	    //label.setIcon(icon);
+	    ImageIcon icon = new ImageIcon("src/icons/king_" + color + ".png");
+	    label = new JLabel();
+	    label.setIcon(resizeIcons(icon));
 	}
 	else if (pieceType == PieceType.Bishop){
-	    //ImageIcon icon = new ImageIcon("src/icons/knight_" + color + ".png");
-	    label = new JLabel("Bi " + color);
-	    //label.setIcon(icon);
+	    ImageIcon icon = new ImageIcon("src/icons/bishop_" + color + ".png");
+	    label = new JLabel();
+	    label.setIcon(resizeIcons(icon));
 	}
 	panel.add(label);
+    }
+
+    private void paintCastling(Component c, boolean leftCastling){
+	int kingNewX;
+	int rookNewX;
+
+	if (leftCastling){
+	    kingNewX = 1;
+	    rookNewX = 2;
+	}
+	else { //Right Castling
+	    kingNewX = 5;
+	    rookNewX = 4;
+	}
+
+	if (pieceColor == PieceColor.WHITE) {
+	    Component kingsNewPos = chessBoard.findComponentAt(kingNewX*SQUARE_WIDTH, 0);
+	    Component rookNewPos = chessBoard.findComponentAt(rookNewX*SQUARE_WIDTH, 0);
+
+	    addPiece(PieceType.King, (JPanel) kingsNewPos, pieceColor);
+
+	    addPiece(PieceType.Rook, (JPanel) rookNewPos, pieceColor);
+
+	    c.getParent().remove(0);
+
+	}
+	else{
+	    Component kingsNewPos = chessBoard.findComponentAt(kingNewX*SQUARE_WIDTH, 7*SQUARE_WIDTH);
+	    Component rookNewPos = chessBoard.findComponentAt(rookNewX*SQUARE_WIDTH, 7*SQUARE_WIDTH);
+
+	    addPiece(PieceType.King, (JPanel) kingsNewPos, pieceColor);
+	    addPiece(PieceType.Rook, (JPanel) rookNewPos, pieceColor);
+
+	    c.getParent().remove(0);
+	}
+    }
+
+    private void hidePossibleMoves(){
+	for (int i = 0; i < layeredPane.getComponentsInLayer(JLayeredPane.DRAG_LAYER).length ; i++) {
+	    layeredPane.getComponent(i).setVisible(false);
+	}
     }
 
 
@@ -160,6 +219,7 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 
 	chessPiece.setSize(chessPiece.getWidth(), chessPiece.getHeight());
 	layeredPane.add(chessPiece, JLayeredPane.DRAG_LAYER);
+	drawPossibleMoves();
 
     }
 
@@ -167,9 +227,7 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 
 	if (chessPiece == null) return;
 
-	for (int i = 0; i < layeredPane.getComponentsInLayer(JLayeredPane.DRAG_LAYER).length ; i++) {
-	    layeredPane.getComponent(i).setVisible(false);
-	}
+	hidePossibleMoves();
 	chessPiece.setVisible(false);
 	Component c =  chessBoard.findComponentAt(e.getX(), e.getY());
 
@@ -177,9 +235,20 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 	int x = oldPosition.x/SQUARE_WIDTH;
 	int newY = e.getY()/SQUARE_WIDTH;
 	int newX = e.getX()/SQUARE_WIDTH;
+	boolean leftCastling = false;
 
-	if (board.isRochade(newY, newX)){
-	    // check is rochade is possible, Move panels.
+	if (board.isCastling(y, x, newY, newX)){
+	    if (board.tryLeftCastling()){
+		leftCastling = true;
+		paintCastling(c, leftCastling);
+		board.changeTurn();
+		return;
+	    }
+	    else if (board.tryRightCastling()){
+		paintCastling(c, leftCastling);
+		board.changeTurn();
+		return;
+	    }
 	}
 
  	if (c instanceof JLabel) {
@@ -200,12 +269,14 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 		if (board.isCheckmate()){
 		    System.out.println("Checkmate " + pieceColor + " wins!");
 		}
+		else if (board.isStalemate()){
+		    System.out.println("Stalemate draw!");
+		}
 	    }
  	}
 	else if (!board.hasMovedPiece(y, x, newY, newX)){
 	    Component oldc = chessBoard.findComponentAt(oldPosition);
 	    PieceType oldPieceType = board.getPiece(y, x).getPieceType();
-
 	    addPiece(oldPieceType, (JPanel) oldc, pieceColor);
 	}
 	else {
@@ -216,6 +287,9 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 	    if (board.isCheckmate()){
 		System.out.println("Checkmate " + pieceColor + " wins!");
 	    }
+	    else if (board.isStalemate()){
+		System.out.println("Stalemate draw!");
+	    }
 
  	}
 
@@ -224,25 +298,7 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
     @Override public void mouseDragged(final MouseEvent e) {
 	if (chessPiece == null) return;
 	chessPiece.setLocation(e.getX() + xAdjustment, e.getY() + yAdjustment);
-	Piece currentPiece = board.getPiece(oldPosition.y/SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH);
 
-	for (int row = 0; row < BOARD_WIDTH; row++) {
-	    for (int col = 0; col < BOARD_WIDTH; col++) {
-		if (currentPiece.validateMove(oldPosition.y/SQUARE_WIDTH, oldPosition.x/SQUARE_WIDTH, row, col, board)){
-		    if (!board.isOpponent(row, col, pieceColor)) {
-			JPanel square = new JPanel(new BorderLayout());
-			Color possibleMoves;
-
-			//chessBoard.add(square).setLocation(row*SQUARE_WIDTH, col*SQUARE_WIDTH);
-			square.setLocation(col * SQUARE_WIDTH, row * SQUARE_WIDTH);
-			square.setSize(SQUARE_WIDTH, SQUARE_WIDTH);
-			square.setBackground(new Color(250, 85, 85, 100));
-			square.setVisible(true);
-			layeredPane.add(square, JLayeredPane.DRAG_LAYER);
-		    }
-		}
-	    }
-	}
 
     }
 
