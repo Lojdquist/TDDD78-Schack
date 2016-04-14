@@ -7,7 +7,7 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
     private Board board;
     private final static int BOARD_WIDTH = 8;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    public final int SQUARE_WIDTH = Integer.parseInt(Math.round(screenSize.getHeight() / 10) + "");
+    public final int SQUARE_WIDTH = (int) Math.round(screenSize.getHeight() / 10);
     private int xAdjustment;
     private int yAdjustment;
     private JLayeredPane layeredPane;
@@ -123,13 +123,14 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 	JLabel label = null;
 
 	if (pieceType == PieceType.Pawn) {
-	    ImageIcon icon = new ImageIcon("src/icons/knight_" + color + ".png");
-	    label = new JLabel("P " + color);
-	    //label.setIcon(icon);
+	    ImageIcon icon = new ImageIcon("src/icons/pawn_" + color + ".png");
+	    label = new JLabel();
+	    label.setIcon(resizeIcons(icon));
 	}
 	else if (pieceType == PieceType.Rook){
-	    ImageIcon icon = new ImageIcon("src/icons/knight_" + color + ".png");
-	    label = new JLabel("R " + color);
+	    ImageIcon icon = new ImageIcon("src/icons/rook_" + color + ".png");
+	    label = new JLabel();
+	    label.setIcon(resizeIcons(icon));
 	}
 	else if (pieceType == PieceType.Knight){
 	    ImageIcon icon = new ImageIcon("src/icons/knight_" + color + ".png");
@@ -137,19 +138,19 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 	    label.setIcon(resizeIcons(icon));
 	}
 	else if (pieceType == PieceType.Queen){
-	    ImageIcon icon = new ImageIcon("src/icons/knight_" + color + ".png");
-	    label = new JLabel("Q " + color);
-	    //label.setIcon(icon);
+	    ImageIcon icon = new ImageIcon("src/icons/queen_" + color + ".png");
+	    label = new JLabel();
+	    label.setIcon(resizeIcons(icon));
 	}
 	else if (pieceType == PieceType.King){
-	    ImageIcon icon = new ImageIcon("src/icons/knight_" + color + ".png");
-	    label = new JLabel("K " + color);
-	    //label.setIcon(icon);
+	    ImageIcon icon = new ImageIcon("src/icons/king_" + color + ".png");
+	    label = new JLabel();
+	    label.setIcon(resizeIcons(icon));
 	}
 	else if (pieceType == PieceType.Bishop){
-	    //ImageIcon icon = new ImageIcon("src/icons/knight_" + color + ".png");
+	    ImageIcon icon = new ImageIcon("src/icons/bishop_" + color + ".png");
 	    label = new JLabel("Bi " + color);
-	    //label.setIcon(icon);
+	    label.setIcon(resizeIcons(icon));
 	}
 	panel.add(label);
     }

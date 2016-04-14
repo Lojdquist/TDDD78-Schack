@@ -120,7 +120,7 @@ public class Board {
 		return false;
 	    }
 	    else {
-		board[newY][newX].hasMoved = false;
+		board[newY][newX].hasMoved = true;
 		return true;
 	    }
 	}
