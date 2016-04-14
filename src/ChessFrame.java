@@ -149,7 +149,11 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 	}
 	else if (pieceType == PieceType.Bishop){
 	    ImageIcon icon = new ImageIcon("src/icons/bishop_" + color + ".png");
+<<<<<<< HEAD
 	    label = new JLabel();
+=======
+	    label = new JLabel("Bi " + color);
+>>>>>>> origin/master
 	    label.setIcon(resizeIcons(icon));
 	}
 	panel.add(label);
@@ -158,7 +162,11 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
     private void paintCastling(Component c, boolean leftCastling){
 	int kingNewX;
 	int rookNewX;
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> origin/master
 	if (leftCastling){
 	    kingNewX = 1;
 	    rookNewX = 2;
@@ -167,7 +175,11 @@ public class ChessFrame extends JFrame implements MouseListener, MouseMotionList
 	    kingNewX = 5;
 	    rookNewX = 4;
 	}
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> origin/master
 	if (pieceColor == PieceColor.WHITE) {
 	    Component kingsNewPos = chessBoard.findComponentAt(kingNewX*SQUARE_WIDTH, 0);
 	    Component rookNewPos = chessBoard.findComponentAt(rookNewX*SQUARE_WIDTH, 0);
